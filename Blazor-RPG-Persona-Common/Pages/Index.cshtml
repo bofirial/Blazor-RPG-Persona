@@ -1,7 +1,107 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h1>Blazor RPG Persona</h1>
 
-Welcome to your new app.
+<form onsubmit="@GeneratePersonaAsync">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" bind="@Name" placeholder="Enter your name" />
+    </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <div class="form-group">
+        <label for="name">Birth Date</label>
+        <select class="form-control" id="month" bind="@BirthMonth">
+            <option selected></option>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+        </select>
+
+        <select class="form-control" id="day" bind="@BirthDay">
+            <option selected></option>
+
+            @for (int i = 1; i <= DaysInMonth; i++)
+            {
+                <option value="@i">@i</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Favorite Food</label>
+        <input type="text" class="form-control" id="favorite" bind="@FavoriteFood" placeholder="Enter your favorite food" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generate Persona</button>
+</form>
+
+@functions {
+    public string Name { get; set; }
+
+    private int _birthMonth;
+
+    public int BirthMonth
+    {
+        get => _birthMonth;
+        set
+        {
+            _birthMonth = value;
+            MonthChanged();
+        }
+    }
+
+    public int BirthDay { get; set; }
+
+    public string FavoriteFood { get; set; }
+
+    public int DaysInMonth { get; set; } = 0;
+
+    public string Status { get; set; }
+
+    public void MonthChanged()
+    {
+        switch (BirthMonth)
+        {
+            case 2:
+                DaysInMonth = 29;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                DaysInMonth = 30;
+                break;
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                DaysInMonth = 31;
+                break;
+            default:
+                DaysInMonth = 0;
+                break;
+        }
+    }
+
+    public async Task GeneratePersonaAsync(UIEventArgs e)
+    {
+    }
+}
+
+@*<h1>Hello, world!</h1>
+
+    Welcome to your new app.
+
+    <SurveyPrompt Title="How is Blazor working for you?" />*@
