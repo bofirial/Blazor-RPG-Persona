@@ -5,6 +5,8 @@
     <RunCommand>dotnet</RunCommand>
     <RunArguments>blazor serve</RunArguments>
     <LangVersion>7.3</LangVersion>
+    <RootNamespace>Blazor_RPG_Persona_Common</RootNamespace>
+    <AssemblyName>Blazor_RPG_Persona_Common</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

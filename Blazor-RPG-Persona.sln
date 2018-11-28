@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Server",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Client", "Blazor-RPG-Persona-Client\Blazor-RPG-Persona-Client.csproj", "{63A33932-DCD5-4E48-A216-B5F7884DF972}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor-RPG-Persona-Common", "Blazor-RPG-Persona-Common\Blazor-RPG-Persona-Common.csproj", "{8BA4DC7C-63DE-44A5-A8EC-ECF419B388D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Common", "Blazor-RPG-Persona-Common\Blazor-RPG-Persona-Common.csproj", "{8BA4DC7C-63DE-44A5-A8EC-ECF419B388D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
