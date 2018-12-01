@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Mime;
-using Blazor_RPG_Persona_Common;
+using BlazorRpgPersonaCommon;
 
-namespace Blazor_RPG_Persona_Client
+namespace BlazorRpgPersonaClient
 {
     public class Startup
     {
@@ -43,7 +43,7 @@ namespace Blazor_RPG_Persona_Client
                 routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
             });
 
-            app.UseBlazor<Blazor_RPG_Persona_Common.Startup>();
+            app.UseBlazor<BlazorRpgPersonaCommon.Startup>();
         }
     }
 }

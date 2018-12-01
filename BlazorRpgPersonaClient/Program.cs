@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Blazor_RPG_Persona_Server
+namespace BlazorRpgPersonaClient
 {
     public class Program
     {

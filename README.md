@@ -1,1 +1,1 @@
-# Blazor-RPG-Persona
+# BlazorRpgPersona

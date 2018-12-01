@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Blazor.Hosting;
 
-namespace Blazor_RPG_Persona_Common
+namespace BlazorRpgPersonaCommon
 {
     public class Program
     {

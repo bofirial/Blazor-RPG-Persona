@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Net.Mime;
-using Blazor_RPG_Persona_Common;
+using BlazorRpgPersonaCommon;
 
-namespace Blazor_RPG_Persona_Server
+namespace BlazorRpgPersonaServer
 {
     public class Startup
     {
@@ -16,7 +16,7 @@ namespace Blazor_RPG_Persona_Server
         public void ConfigureServices(IServiceCollection services)
         {
             // Adds the Server-Side Blazor services, and those registered by the app project's startup.
-            services.AddServerSideBlazor<Blazor_RPG_Persona_Common.Startup>();
+            services.AddServerSideBlazor<BlazorRpgPersonaCommon.Startup>();
 
             services.AddResponseCompression(options =>
             {
@@ -39,7 +39,7 @@ namespace Blazor_RPG_Persona_Server
             }
 
             // Use component registrations and static files from the app project.
-            app.UseServerSideBlazor<Blazor_RPG_Persona_Common.Startup>();
+            app.UseServerSideBlazor<BlazorRpgPersonaCommon.Startup>();
         }
     }
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blazor_RPG_Persona_Common
+namespace BlazorRpgPersonaCommon
 {
     public class Startup
     {

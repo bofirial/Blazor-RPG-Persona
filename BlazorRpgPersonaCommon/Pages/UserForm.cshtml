@@ -1,0 +1,94 @@
+﻿@using BlazorRpgPersonaCommon.Models
+
+<form onsubmit="@GeneratePersonaAsync">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name" />
+    </div>
+
+    <div class="form-group">
+        <label for="name">Birth Date</label>
+        <div class="row justify-content-between no-gutters">
+            <select class="form-control col-5" id="month" bind="@BirthMonthWithChangeEvent">
+                <option selected></option>
+                @foreach (var month in Months)
+                {
+                    <option value="@month.MonthNumber">@month.Month</option>
+                }
+            </select>
+
+            <select class="form-control col-5" id="day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
+                <option selected></option>
+                @for (int i = 1; i <= DaysInMonth; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Favorite Food</label>
+        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Generate Persona</button>
+</form>
+
+@functions
+{
+    [Parameter]
+    UserViewModel Model { get; set; }
+
+    [Parameter]
+    Func<Task> GeneratePersonaAsyncFunc { get; set; } = () => Task.CompletedTask;
+
+    public int BirthMonthWithChangeEvent
+    {
+        get => Model.BirthMonth;
+        set
+        {
+            Model.BirthMonth = value;
+
+            MonthChanged();
+        }
+    }
+
+    public int DaysInMonth { get; set; } = 0;
+
+    public void MonthChanged()
+    {
+        var month = Months.FirstOrDefault(m => m.MonthNumber == Model.BirthMonth);
+
+        if (month != default((int MonthNumber, string Month, int DaysInMonth)))
+        {
+            DaysInMonth = month.DaysInMonth;
+        }
+        else
+        {
+            DaysInMonth = 0;
+        }
+    }
+
+    public async Task GeneratePersonaAsync(UIEventArgs e)
+    {
+        await GeneratePersonaAsyncFunc();
+    }
+
+    private static List<(int MonthNumber, string Month, int DaysInMonth)> Months = new List<(int MonthNumber, string Month, int DaysInMonth)>()
+    {
+        (MonthNumber: 1,  Month: "January",   DaysInMonth: 31),
+        (MonthNumber: 2,  Month: "February",  DaysInMonth: 29),
+        (MonthNumber: 3,  Month: "March",     DaysInMonth: 31),
+        (MonthNumber: 4,  Month: "April",     DaysInMonth: 30),
+        (MonthNumber: 5,  Month: "May",       DaysInMonth: 31),
+        (MonthNumber: 6,  Month: "June",      DaysInMonth: 30),
+        (MonthNumber: 7,  Month: "July",      DaysInMonth: 31),
+        (MonthNumber: 8,  Month: "August",    DaysInMonth: 31),
+        (MonthNumber: 9,  Month: "September", DaysInMonth: 30),
+        (MonthNumber: 10, Month: "October",   DaysInMonth: 31),
+        (MonthNumber: 11, Month: "November",  DaysInMonth: 30),
+        (MonthNumber: 12, Month: "December",  DaysInMonth: 31)
+    };
+
+}

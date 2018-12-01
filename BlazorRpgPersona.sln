@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28306.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Server", "Blazor-RPG-Persona-Server\Blazor-RPG-Persona-Server.csproj", "{F1DA50D7-C267-4ACD-8B50-17284B5FC698}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaServer", "BlazorRpgPersonaServer\BlazorRpgPersonaServer.csproj", "{F1DA50D7-C267-4ACD-8B50-17284B5FC698}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Client", "Blazor-RPG-Persona-Client\Blazor-RPG-Persona-Client.csproj", "{63A33932-DCD5-4E48-A216-B5F7884DF972}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaClient", "BlazorRpgPersonaClient\BlazorRpgPersonaClient.csproj", "{63A33932-DCD5-4E48-A216-B5F7884DF972}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor-RPG-Persona-Common", "Blazor-RPG-Persona-Common\Blazor-RPG-Persona-Common.csproj", "{8BA4DC7C-63DE-44A5-A8EC-ECF419B388D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaCommon", "BlazorRpgPersonaCommon\BlazorRpgPersonaCommon.csproj", "{8BA4DC7C-63DE-44A5-A8EC-ECF419B388D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

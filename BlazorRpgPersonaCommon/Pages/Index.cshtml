@@ -1,11 +1,9 @@
 ﻿@page "/"
-@using Blazor_RPG_Persona_Common.Models
+@using BlazorRpgPersonaCommon.Models
 
 <h1>Blazor RPG Persona</h1>
 
-<TestComponent />
-
-<UserForm />
+<UserForm Model="@UserViewModel" GeneratePersonaAsyncFunc="@GeneratePersonaAsync" />
 
 @functions {
     UserViewModel UserViewModel { get; set; } = new UserViewModel();
@@ -13,10 +11,7 @@
 
     async Task GeneratePersonaAsync()
     {
-        Debug = "Submitted";
+
+        this.StateHasChanged();
     }
-
-    public string Debug { get; set; }
 }
-
-<h2>@Debug</h2>

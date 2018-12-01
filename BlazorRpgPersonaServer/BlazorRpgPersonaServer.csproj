@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blazor-RPG-Persona-Common\Blazor-RPG-Persona-Common.csproj" />
+    <ProjectReference Include="..\BlazorRpgPersonaCommon\BlazorRpgPersonaCommon.csproj" />
   </ItemGroup>
 
 </Project>
