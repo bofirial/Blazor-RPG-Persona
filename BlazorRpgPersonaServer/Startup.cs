@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,7 +6,9 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System.Net.Mime;
+using System.Threading.Tasks;
 using BlazorRpgPersonaCommon;
+using Microsoft.AspNetCore.Http;
 
 namespace BlazorRpgPersonaServer
 {
@@ -37,6 +40,16 @@ namespace BlazorRpgPersonaServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/_framework/blazor.js")
+                {
+                    context.Request.Path = "/_framework/blazor.server.js";
+                }
+
+                await next.Invoke();
+            });
 
             // Use component registrations and static files from the app project.
             app.UseServerSideBlazor<BlazorRpgPersonaCommon.Startup>();

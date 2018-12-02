@@ -43,6 +43,16 @@ namespace BlazorRpgPersonaClient
                 routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
             });
 
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/_framework/blazor.js")
+                {
+                    context.Request.Path = "/_framework/blazor.webassembly.js";
+                }
+
+                await next.Invoke();
+            });
+
             app.UseBlazor<BlazorRpgPersonaCommon.Startup>();
         }
     }
