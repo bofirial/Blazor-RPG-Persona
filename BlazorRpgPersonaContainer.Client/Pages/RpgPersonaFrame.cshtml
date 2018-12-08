@@ -1,0 +1,20 @@
+﻿@using Microsoft.Extensions.Logging
+
+@inject ILogger<RpgPersonaFrame> Logger
+
+<iframe src="about:blank" name="@FrameName"></iframe>
+
+@functions
+{
+    [Parameter]
+    string FrameName { get; set; }
+
+    [Parameter]
+    string FrameSource { get; set; }
+
+    protected override async Task OnAfterRenderAsync()
+    {
+        //await JSRuntime.Current.InvokeAsync<object>(
+        //    "rpgPersona.init", FrameName, FrameSource, new DotNetObjectRef(this));
+    }
+}

@@ -1,14 +1,12 @@
+using System.Linq;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
-using System.Linq;
-using System.Net.Mime;
-using BlazorRpgPersonaCommon;
 
-namespace BlazorRpgPersonaClient
+namespace BlazorRpgPersonaContainer.Server
 {
     public class Startup
     {
@@ -31,17 +29,7 @@ namespace BlazorRpgPersonaClient
         {
             app.UseResponseCompression();
 
-            app.Use(async (context, next) =>
-            {
-                if (context.Request.Path == "/_framework/blazor.js")
-                {
-                    context.Request.Path = "/_framework/blazor.webassembly.js";
-                }
-
-                await next.Invoke();
-            });
-
-            app.UseBlazor<BlazorRpgPersonaCommon.Startup>();
+            app.UseBlazor<Client.Startup>();
         }
     }
 }
