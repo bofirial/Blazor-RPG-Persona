@@ -1,8 +1,9 @@
-﻿@using Microsoft.Extensions.Logging
+﻿@using BlazorRpgPersonaContainer.Client.Models
+@using Microsoft.Extensions.Logging
 
 @inject ILogger<RpgPersonaFrame> Logger
 
-<iframe src="about:blank" name="@FrameName"></iframe>
+<iframe class="rpgPersonaFrame @FrameName" src="about:blank" name="@FrameName"></iframe>
 
 @functions
 {
@@ -14,7 +15,14 @@
 
     protected override async Task OnAfterRenderAsync()
     {
-        //await JSRuntime.Current.InvokeAsync<object>(
-        //    "rpgPersona.init", FrameName, FrameSource, new DotNetObjectRef(this));
+        await JSRuntime.Current.InvokeAsync<object>(
+            "statusReportSender.send", new FrameApplicationStatusReport()
+            {
+                FrameName = FrameName,
+                Status = "Starting Initial Frame Request."
+            });
+
+        await JSRuntime.Current.InvokeAsync<object>(
+            "frameStarter.startFrame", FrameName, FrameSource);
     }
 }

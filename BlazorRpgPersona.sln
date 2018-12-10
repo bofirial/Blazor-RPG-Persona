@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaClient", "B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaCommon", "BlazorRpgPersonaCommon\BlazorRpgPersonaCommon.csproj", "{8BA4DC7C-63DE-44A5-A8EC-ECF419B388D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorRpgPersonaContainer.Server", "BlazorRpgPersonaContainer.Server\BlazorRpgPersonaContainer.Server.csproj", "{5A4FC04F-AC90-4A6C-9917-CD3AFA39BEA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaContainer.Server", "BlazorRpgPersonaContainer.Server\BlazorRpgPersonaContainer.Server.csproj", "{5A4FC04F-AC90-4A6C-9917-CD3AFA39BEA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorRpgPersonaContainer.Client", "BlazorRpgPersonaContainer.Client\BlazorRpgPersonaContainer.Client.csproj", "{9C782895-B991-4422-B770-29821339E70D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorRpgPersonaContainer.Client", "BlazorRpgPersonaContainer.Client\BlazorRpgPersonaContainer.Client.csproj", "{9C782895-B991-4422-B770-29821339E70D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorRpgPersonaContainer", "BlazorRpgPersonaContainer", "{D28A8E96-2481-4784-990A-8BBE712C5E45}"
 EndProject

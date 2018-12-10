@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using BlazorRpgPersonaContainer.Client.Models;
 using Microsoft.JSInterop;
 
-namespace BlazorRpgPersonaContainer.Client
+namespace BlazorRpgPersonaContainer.Client.BusinessLogic
 {
     public class FrameApplicationStatusReportReceiver : IFrameApplicationStatusReportReceiver
     {
@@ -17,11 +18,15 @@ namespace BlazorRpgPersonaContainer.Client
         }
 
         [JSInvokable]
-        public void ReceiveStatusReport(FrameApplicationStatusReport frameApplicationStatusReport)
+        public FrameApplicationStatusReport ReceiveStatusReport(FrameApplicationStatusReport frameApplicationStatusReport)
         {
+            frameApplicationStatusReport.CreatedOn = DateTime.Now;
+
             FrameApplicationStatusReports.Add(frameApplicationStatusReport);
 
             OnFrameApplicationStatusReportReceived(frameApplicationStatusReport);
+
+            return frameApplicationStatusReport;
         }
     }
 }

@@ -1,5 +1,6 @@
 using Blazor.Extensions.Logging;
 using BlazorRpgPersonaContainer.Client;
+using BlazorRpgPersonaContainer.Client.BusinessLogic;
 using Microsoft.AspNetCore.Blazor.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

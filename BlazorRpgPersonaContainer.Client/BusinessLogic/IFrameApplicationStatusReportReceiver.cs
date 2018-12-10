@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using BlazorRpgPersonaContainer.Client.Models;
 
-namespace BlazorRpgPersonaContainer.Client
+namespace BlazorRpgPersonaContainer.Client.BusinessLogic
 {
     public interface IFrameApplicationStatusReportReceiver
     {
@@ -9,6 +10,6 @@ namespace BlazorRpgPersonaContainer.Client
 
         event Action<FrameApplicationStatusReport> FrameApplicationStatusReportReceived;
 
-        void ReceiveStatusReport(FrameApplicationStatusReport frameApplicationStatusReport);
+        FrameApplicationStatusReport ReceiveStatusReport(FrameApplicationStatusReport frameApplicationStatusReport);
     }
 }

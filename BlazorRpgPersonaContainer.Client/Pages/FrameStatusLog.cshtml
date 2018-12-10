@@ -1,0 +1,15 @@
+﻿@using BlazorRpgPersonaContainer.Client.Models
+
+<ol class="frameStatusLog">
+    @foreach (var frameApplicationStatusReport in FrameApplicationStatusReports)
+    {
+    <li>@frameApplicationStatusReport.FrameName (@frameApplicationStatusReport.CreatedOn): @frameApplicationStatusReport.Status</li>
+    }
+</ol>
+
+
+@functions
+{
+    [Parameter]
+    IEnumerable<FrameApplicationStatusReport> FrameApplicationStatusReports { get; set; }
+}
