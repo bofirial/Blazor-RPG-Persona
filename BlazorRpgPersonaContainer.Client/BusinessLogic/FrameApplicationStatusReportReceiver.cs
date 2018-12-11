@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BlazorRpgPersonaContainer.Client.Models;
 using Microsoft.JSInterop;
+using BlazorRpgPersona.Models;
 
 namespace BlazorRpgPersonaContainer.Client.BusinessLogic
 {

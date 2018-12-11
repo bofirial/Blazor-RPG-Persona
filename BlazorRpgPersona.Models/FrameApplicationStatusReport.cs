@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BlazorRpgPersonaContainer.Client.Models
+namespace BlazorRpgPersona.Models
 {
     public class FrameApplicationStatusReport
     {

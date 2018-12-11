@@ -1,4 +1,4 @@
-﻿@using BlazorRpgPersonaContainer.Client.Models
+﻿@using BlazorRpgPersona.Models;
 @using Microsoft.Extensions.Logging
 
 @inject ILogger<RpgPersonaFrame> Logger
@@ -7,22 +7,22 @@
 
 @functions
 {
-    [Parameter]
-    string FrameName { get; set; }
+[Parameter]
+string FrameName { get; set; }
 
-    [Parameter]
-    string FrameSource { get; set; }
+[Parameter]
+string FrameSource { get; set; }
 
-    protected override async Task OnAfterRenderAsync()
-    {
-        await JSRuntime.Current.InvokeAsync<object>(
-            "statusReportSender.send", new FrameApplicationStatusReport()
-            {
-                FrameName = FrameName,
-                Status = "Starting Initial Frame Request."
-            });
+protected override async Task OnAfterRenderAsync()
+{
+    await JSRuntime.Current.InvokeAsync<object>(
+        "statusReportSender.send", new FrameApplicationStatusReport()
+        {
+            FrameName = FrameName,
+            Status = "Starting Initial Frame Request."
+        });
 
-        await JSRuntime.Current.InvokeAsync<object>(
-            "frameStarter.startFrame", FrameName, FrameSource);
-    }
+    await JSRuntime.Current.InvokeAsync<object>(
+        "frameStarter.startFrame", FrameName, FrameSource);
+}
 }

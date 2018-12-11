@@ -1,12 +1,24 @@
 ﻿@page "/"
+@using BlazorRpgPersona.Models
+@inject HttpClient HttpClient
 
 <FrameControllerForm />
 <FrameStatusLogs />
 
-<RpgPersonaFrame FrameName="Client"/>
-<RpgPersonaFrame FrameName="Server"/>
+@if (null != containerApplications)
+{
+    foreach (var containerApplication in containerApplications)
+     {
+         <RpgPersonaFrame FrameName="@containerApplication.ApplicationName" FrameSource="@containerApplication.ApplicationUrl" />
+     }
+}
 
 @functions
 {
-    
+private List<ContainerApplication> containerApplications;
+
+protected override async Task OnInitAsync()
+{
+    containerApplications = await HttpClient.GetJsonAsync<List<ContainerApplication>>("api/containerapplications");
+}
 }

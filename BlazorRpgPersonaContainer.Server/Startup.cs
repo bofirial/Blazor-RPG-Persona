@@ -3,6 +3,7 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,12 +23,17 @@ namespace BlazorRpgPersonaContainer.Server
                     WasmMediaTypeNames.Application.Wasm,
                 });
             });
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseResponseCompression();
+
+            app.UseMvc();
 
             app.UseBlazor<Client.Startup>();
         }
