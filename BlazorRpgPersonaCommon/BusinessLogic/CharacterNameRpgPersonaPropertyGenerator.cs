@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BlazorRpgPersona.Models;
 using BlazorRpgPersonaCommon.Models;
 
 namespace BlazorRpgPersonaCommon.BusinessLogic

@@ -26,6 +26,6 @@ window.frameStarter = {
 
         let frame = document.querySelector(".rpgPersonaFrame." + frameName);
 
-        //frame.src = frameSource;
+        frame.src = frameSource;
     }
 };

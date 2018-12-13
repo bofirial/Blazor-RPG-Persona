@@ -1,4 +1,5 @@
-﻿using BlazorRpgPersonaCommon.Models;
+﻿using BlazorRpgPersona.Models;
+using BlazorRpgPersonaCommon.Models;
 
 namespace BlazorRpgPersonaCommon.BusinessLogic
 {

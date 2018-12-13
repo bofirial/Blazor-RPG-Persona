@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using BlazorRpgPersona.Models;
 using BlazorRpgPersonaCommon.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

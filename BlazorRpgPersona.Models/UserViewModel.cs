@@ -1,4 +1,4 @@
-﻿namespace BlazorRpgPersonaCommon.Models
+﻿namespace BlazorRpgPersona.Models
 {
     public class UserViewModel
     {
