@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BlazorRpgPersonaContainer.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/container-applications")]
     [ApiController]
     public class ContainerApplicationsController : ControllerBase
     {

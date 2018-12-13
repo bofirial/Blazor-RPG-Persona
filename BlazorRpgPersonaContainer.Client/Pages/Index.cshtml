@@ -19,6 +19,6 @@ private List<ContainerApplication> containerApplications;
 
 protected override async Task OnInitAsync()
 {
-    containerApplications = await HttpClient.GetJsonAsync<List<ContainerApplication>>("api/containerapplications");
+    containerApplications = await HttpClient.GetJsonAsync<List<ContainerApplication>>("api/container-applications");
 }
 }
