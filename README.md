@@ -1,1 +1,1 @@
-# BlazorRpgPersona
+# Blazor Technology Character Generator

@@ -1,0 +1,24 @@
+﻿@page "/"
+@using TechnologyCharacterGenerator.Models
+@inject HttpClient HttpClient
+
+<ChildApplicationControllerForm />
+<ChildApplicationStatusLogs />
+
+@if (null != ChildApplications)
+{
+    foreach (var childApplication in ChildApplications)
+     {
+         <ChildApplication ChildApplicationName="@childApplication.ApplicationName" ChildApplicationUrl="@childApplication.ApplicationUrl" />
+     }
+}
+
+@functions
+{
+private List<ChildApplicationModel> ChildApplications;
+
+protected override async Task OnInitAsync()
+{
+    ChildApplications = await HttpClient.GetJsonAsync<List<ChildApplicationModel>>("api/child-applications");
+}
+}

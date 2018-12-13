@@ -1,0 +1,29 @@
+﻿@page "/"
+@using TechnologyCharacterGenerator.Models
+@using TechnologyCharacterGenerator.Child.Common.BusinessLogic
+
+@inject ITechnologyCharacterCreator TechnologyCharacterGenerator
+@inject ILogger<Index> Logger
+
+<h1>Technology Character Generator</h1>
+
+<UserForm Model="@UserViewModel" GeneratePersonaAsyncFunc="@GeneratePersonaAsync" />
+@if (null != TechnologyCharacterViewModel)
+{
+    <TechnologyCharacter Model="@TechnologyCharacterViewModel" />
+}
+
+
+@functions {
+    UserViewModel UserViewModel { get; set; } = new UserViewModel();
+
+    TechnologyCharacterViewModel TechnologyCharacterViewModel { get; set; }
+
+    async Task GeneratePersonaAsync()
+    {
+        Logger.LogInformation("Generating Persona.");
+        TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(UserViewModel));
+
+        this.StateHasChanged();
+    }
+}

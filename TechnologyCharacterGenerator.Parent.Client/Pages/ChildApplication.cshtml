@@ -1,0 +1,28 @@
+﻿@using TechnologyCharacterGenerator.Models;
+@using Microsoft.Extensions.Logging
+
+@inject ILogger<ChildApplication> Logger
+
+<iframe class="childApplication @ChildApplicationName" src="about:blank" name="@ChildApplicationName"></iframe>
+
+@functions
+{
+[Parameter]
+string ChildApplicationName { get; set; }
+
+[Parameter]
+string ChildApplicationUrl { get; set; }
+
+protected override async Task OnAfterRenderAsync()
+{
+    await JSRuntime.Current.InvokeAsync<object>(
+        "statusReportSender.send", new ChildApplicationStatusReportModel()
+        {
+            ApplicationName = ChildApplicationName,
+            Status = "Starting Initial Child Application Request."
+        });
+
+    await JSRuntime.Current.InvokeAsync<object>(
+        "childApplicationStarter.startChildApplication", ChildApplicationName, ChildApplicationUrl);
+}
+}

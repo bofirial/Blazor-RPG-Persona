@@ -1,0 +1,15 @@
+﻿@using TechnologyCharacterGenerator.Models;
+
+<ol class="childApplicationStatusLog">
+    @foreach (var childApplicationStatusReport in ChildApplicationStatusReports)
+    {
+    <li>@childApplicationStatusReport.ApplicationName (@childApplicationStatusReport.CreatedOn): @childApplicationStatusReport.Status</li>
+    }
+</ol>
+
+
+@functions
+{
+    [Parameter]
+    IEnumerable<ChildApplicationStatusReportModel> ChildApplicationStatusReports { get; set; }
+}

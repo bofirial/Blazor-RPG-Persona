@@ -1,0 +1,18 @@
+﻿@using TechnologyCharacterGenerator.Parent.Client.BusinessLogic
+
+
+@inject IChildApplicationStatusReportReceiver ChildApplicationStatusReportReceiver
+
+<div class="childApplicationStatusLogs">
+    <ChildApplicationStatusLog ChildApplicationStatusReports="@ChildApplicationStatusReportReceiver.ChildApplicationStatusReports.Where(f => f.ApplicationName == "Client")" />
+    <ChildApplicationStatusLog ChildApplicationStatusReports="@ChildApplicationStatusReportReceiver.ChildApplicationStatusReports.Where(f => f.ApplicationName == "Server")" />
+</div>
+
+@functions
+{
+    protected override async Task OnInitAsync()
+    {
+        await JSRuntime.Current.InvokeAsync<object>(
+            "statusReportSender.init", new DotNetObjectRef(ChildApplicationStatusReportReceiver));
+    }
+}
