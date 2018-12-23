@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TechnologyCharacterGenerator.Models;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
 {

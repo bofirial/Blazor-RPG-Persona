@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TechnologyCharacterGenerator.Models\TechnologyCharacterGenerator.Models.csproj" />
+    <ProjectReference Include="..\TechnologyCharacterGenerator.Foundation\TechnologyCharacterGenerator.Foundation.csproj" />
   </ItemGroup>
 
 </Project>

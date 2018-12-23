@@ -1,4 +1,4 @@
-﻿namespace TechnologyCharacterGenerator.Models
+﻿namespace TechnologyCharacterGenerator.Foundation.Models
 {
     public class UserViewModel
     {

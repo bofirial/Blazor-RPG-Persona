@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using TechnologyCharacterGenerator.Models;
+using TechnologyCharacterGenerator.Foundation.Models;
 using TechnologyCharacterGenerator.Child.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

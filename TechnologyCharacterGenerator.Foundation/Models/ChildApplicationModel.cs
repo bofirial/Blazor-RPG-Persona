@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TechnologyCharacterGenerator.Models
+﻿namespace TechnologyCharacterGenerator.Foundation.Models
 {
     public class ChildApplicationModel
     {

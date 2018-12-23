@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TechnologyCharacterGenerator.Models;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Parent.Client.BusinessLogic
 {

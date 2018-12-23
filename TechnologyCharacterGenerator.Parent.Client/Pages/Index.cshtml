@@ -1,16 +1,21 @@
 ﻿@page "/"
-@using TechnologyCharacterGenerator.Models
+@using TechnologyCharacterGenerator.Foundation.Models
+@addTagHelper *, TechnologyCharacterGenerator.Foundation
 @inject HttpClient HttpClient
 
-<ChildApplicationControllerForm />
-<ChildApplicationStatusLogs />
+<h1>Technology Character Generator</h1>
+
+<UserForm />
+
+@*<ChildApplicationControllerForm />*@
+@*<ChildApplicationStatusLogs />*@
 
 @if (null != ChildApplications)
 {
     foreach (var childApplication in ChildApplications)
-     {
-         <ChildApplication ChildApplicationName="@childApplication.ApplicationName" ChildApplicationUrl="@childApplication.ApplicationUrl" />
-     }
+    {
+        <ChildApplication ChildApplicationName="@childApplication.ApplicationName" ChildApplicationUrl="@childApplication.ApplicationUrl" />
+    }
 }
 
 @functions

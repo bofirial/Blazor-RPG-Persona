@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TechnologyCharacterGenerato
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TechnologyCharacterGenerator.Parent", "TechnologyCharacterGenerator.Parent", "{D28A8E96-2481-4784-990A-8BBE712C5E45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnologyCharacterGenerator.Models", "TechnologyCharacterGenerator.Models\TechnologyCharacterGenerator.Models.csproj", "{A45904DE-8A17-4B84-91D2-43AEBC87C800}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TechnologyCharacterGenerator.Foundation", "TechnologyCharacterGenerator.Foundation\TechnologyCharacterGenerator.Foundation.csproj", "{F860E520-DAAB-4FCF-A88F-1D4A0DD6821E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +43,10 @@ Global
 		{9C782895-B991-4422-B770-29821339E70D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C782895-B991-4422-B770-29821339E70D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C782895-B991-4422-B770-29821339E70D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A45904DE-8A17-4B84-91D2-43AEBC87C800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A45904DE-8A17-4B84-91D2-43AEBC87C800}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A45904DE-8A17-4B84-91D2-43AEBC87C800}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A45904DE-8A17-4B84-91D2-43AEBC87C800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F860E520-DAAB-4FCF-A88F-1D4A0DD6821E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F860E520-DAAB-4FCF-A88F-1D4A0DD6821E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F860E520-DAAB-4FCF-A88F-1D4A0DD6821E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F860E520-DAAB-4FCF-A88F-1D4A0DD6821E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

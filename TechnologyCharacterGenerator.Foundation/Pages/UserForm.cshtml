@@ -1,10 +1,10 @@
 ﻿@using TechnologyCharacterGenerator.Foundation.Models
 
-
 <form onsubmit="@GeneratePersonaAsync">
+
     <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name" />
+        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name"/>
     </div>
 
     <div class="form-group">
@@ -30,7 +30,7 @@
 
     <div class="form-group">
         <label for="name">Favorite Food</label>
-        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
+        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food"/>
     </div>
 
     <button type="submit" class="btn btn-primary">Generate Persona</button>
@@ -39,7 +39,7 @@
 @functions
 {
 UserViewModel Model { get; set; } = new UserViewModel();
-    
+
 [Parameter]
 Func<string, string, Task> FieldUpdatedAsyncFunc { get; set; } = (fieldName, fieldValue) => Task.CompletedTask;
 

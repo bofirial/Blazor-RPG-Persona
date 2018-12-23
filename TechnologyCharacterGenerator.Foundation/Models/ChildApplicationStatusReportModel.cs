@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TechnologyCharacterGenerator.Models
+namespace TechnologyCharacterGenerator.Foundation.Models
 {
     public class ChildApplicationStatusReportModel
     {

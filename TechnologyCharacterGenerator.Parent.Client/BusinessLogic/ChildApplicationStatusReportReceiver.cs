@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.JSInterop;
-using TechnologyCharacterGenerator.Models;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Parent.Client.BusinessLogic
 {

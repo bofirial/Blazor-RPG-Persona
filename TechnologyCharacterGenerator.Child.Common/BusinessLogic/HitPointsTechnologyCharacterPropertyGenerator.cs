@@ -1,4 +1,4 @@
-﻿using TechnologyCharacterGenerator.Models;
+﻿using TechnologyCharacterGenerator.Foundation.Models;
 using TechnologyCharacterGenerator.Child.Common.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
