@@ -1,11 +1,9 @@
 ﻿@page "/"
-@using TechnologyCharacterGenerator.Foundation.Models
-@addTagHelper *, TechnologyCharacterGenerator.Foundation
 @inject HttpClient HttpClient
 
 <h1>Technology Character Generator</h1>
 
-<UserForm />
+<UserForm Id="parentUserForm" IsCollapsed="false" bind-Model="@UserViewModel"/>
 
 @*<ChildApplicationControllerForm />*@
 @*<ChildApplicationStatusLogs />*@
@@ -20,10 +18,21 @@
 
 @functions
 {
-private List<ChildApplicationModel> ChildApplications;
+    private List<ChildApplicationModel> ChildApplications;
 
-protected override async Task OnInitAsync()
-{
-    ChildApplications = await HttpClient.GetJsonAsync<List<ChildApplicationModel>>("api/child-applications");
-}
+    protected override async Task OnInitAsync()
+    {
+        ChildApplications = await HttpClient.GetJsonAsync<List<ChildApplicationModel>>("api/child-applications");
+    }
+
+    private UserViewModel _userViewModel = new UserViewModel();
+    private UserViewModel UserViewModel
+    {
+        get => _userViewModel;
+        set
+        {
+            //TODO: Update Child Applications' User View Models
+            _userViewModel = value;
+        }
+    }
 }
