@@ -1,0 +1,17 @@
+﻿
+<div class="form-group">
+    <label for="@For">@Label</label>
+    @ChildContent
+</div>
+
+@functions {
+
+    [Parameter]
+    private string Label { get; set; }
+
+    [Parameter]
+    private string For { get; set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+}

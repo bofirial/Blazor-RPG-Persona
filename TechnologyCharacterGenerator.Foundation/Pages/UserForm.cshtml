@@ -2,13 +2,11 @@
 
 <form onsubmit="@GeneratePersonaAsync">
 
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name"/>
-    </div>
+    <Field For="name" Label="Name">
+        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name" />
+    </Field>
 
-    <div class="form-group">
-        <label for="name">Birth Date</label>
+    <Field For="month" Label="Birth Date">
         <div class="row justify-content-between no-gutters">
             <select class="form-control col-5" id="month" bind="@BirthMonthWithChangeEvent">
                 <option selected></option>
@@ -26,12 +24,11 @@
                 }
             </select>
         </div>
-    </div>
+    </Field>
 
-    <div class="form-group">
-        <label for="name">Favorite Food</label>
-        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food"/>
-    </div>
+    <Field For="favorite" Label="Favorite Food">
+        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
+    </Field>
 
     <button type="submit" class="btn btn-primary">Generate Persona</button>
 </form>
