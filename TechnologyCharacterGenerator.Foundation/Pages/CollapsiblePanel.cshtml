@@ -1,0 +1,53 @@
+﻿@using Microsoft.JSInterop
+
+<div class="card">
+    <div class="card-header" id="@(Id)Heading">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@Id" aria-expanded="@((!IsCollapsed).ToString().ToLower())" aria-controls="@Id">
+                @Title
+            </button>
+        </h5>
+    </div>
+
+    <div id="@Id" class="collapse" aria-labelledby="@(Id)Heading">
+        <div class="card-body">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@functions
+{
+
+    [Parameter]
+    private string Id { get; set; }
+
+    [Parameter]
+    private string Title { get; set; }
+
+    [Parameter]
+    private RenderFragment ChildContent { get; set; }
+
+
+    [Parameter]
+    private bool IsCollapsed { get; set; } = false;
+
+    [Parameter]
+    private Action<bool> IsCollapsedChanged { get; set; } = (isCollapsed) => {};
+
+    [JSInvokable]
+    public void UpdateIsCollapsed(bool isCollapsed)
+    {
+        IsCollapsed = isCollapsed;
+        IsCollapsedChanged(isCollapsed);
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        await JSRuntime.Current.InvokeAsync<object>(
+            "foundation.collapsiblePanel.init",
+            new DotNetObjectRef(this), Id, IsCollapsed);
+    }
+}

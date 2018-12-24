@@ -1,81 +1,83 @@
 ﻿@using TechnologyCharacterGenerator.Foundation.Models
 
-<form onsubmit="@GeneratePersonaAsync">
+<CollapsiblePanel Id="userForm" Title="Collapsible Panel" IsCollapsed="false">
+    <form onsubmit="@GeneratePersonaAsync">
 
-    <Field For="name" Label="Name">
-        <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name" />
-    </Field>
+        <Field For="name" Label="Name">
+            <input type="text" class="form-control" id="name" bind="@Model.Name" placeholder="Enter your name" />
+        </Field>
 
-    <Field For="month" Label="Birth Date">
-        <div class="row justify-content-between no-gutters">
-            <select class="form-control col-5" id="month" bind="@BirthMonthWithChangeEvent">
-                <option selected></option>
-                @foreach (var month in Months)
-                {
-                    <option value="@month.MonthNumber">@month.Month</option>
-                }
-            </select>
+        <Field For="month" Label="Birth Date">
+            <div class="row justify-content-between no-gutters">
+                <select class="form-control col-5" id="month" bind="@BirthMonthWithChangeEvent">
+                    <option selected></option>
+                    @foreach (var month in Months)
+                    {
+                        <option value="@month.MonthNumber">@month.Month</option>
+                    }
+                </select>
 
-            <select class="form-control col-5" id="day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
-                <option selected></option>
-                @for (int i = 1; i <= DaysInMonth; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-            </select>
-        </div>
-    </Field>
+                <select class="form-control col-5" id="day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
+                    <option selected></option>
+                    @for (int i = 1; i <= DaysInMonth; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+        </Field>
 
-    <Field For="favorite" Label="Favorite Food">
-        <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
-    </Field>
+        <Field For="favorite" Label="Favorite Food">
+            <input type="text" class="form-control" id="favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
+        </Field>
 
-    <button type="submit" class="btn btn-primary">Generate Persona</button>
-</form>
+        <button type="submit" class="btn btn-primary">Generate Persona</button>
+    </form>
+</CollapsiblePanel>
 
 @functions
 {
-UserViewModel Model { get; set; } = new UserViewModel();
+    UserViewModel Model { get; set; } = new UserViewModel();
 
-[Parameter]
-Func<string, string, Task> FieldUpdatedAsyncFunc { get; set; } = (fieldName, fieldValue) => Task.CompletedTask;
+    [Parameter]
+    Func<string, string, Task> FieldUpdatedAsyncFunc { get; set; } = (fieldName, fieldValue) => Task.CompletedTask;
 
-[Parameter]
-Func<Task> GeneratePersonaAsyncFunc { get; set; } = () => Task.CompletedTask;
+    [Parameter]
+    Func<Task> GeneratePersonaAsyncFunc { get; set; } = () => Task.CompletedTask;
 
-public int BirthMonthWithChangeEvent
-{
-    get => Model.BirthMonth;
-    set
+    public int BirthMonthWithChangeEvent
     {
-        Model.BirthMonth = value;
+        get => Model.BirthMonth;
+        set
+        {
+            Model.BirthMonth = value;
 
-        MonthChanged();
+            MonthChanged();
+        }
     }
-}
 
-public int DaysInMonth { get; set; } = 0;
+    public int DaysInMonth { get; set; } = 0;
 
-public void MonthChanged()
-{
-    var month = Months.FirstOrDefault(m => m.MonthNumber == Model.BirthMonth);
-
-    if (month != default((int MonthNumber, string Month, int DaysInMonth)))
+    public void MonthChanged()
     {
-        DaysInMonth = month.DaysInMonth;
+        var month = Months.FirstOrDefault(m => m.MonthNumber == Model.BirthMonth);
+
+        if (month != default((int MonthNumber, string Month, int DaysInMonth)))
+        {
+            DaysInMonth = month.DaysInMonth;
+        }
+        else
+        {
+            DaysInMonth = 0;
+        }
     }
-    else
+
+    public async Task GeneratePersonaAsync(UIEventArgs e)
     {
-        DaysInMonth = 0;
+        await GeneratePersonaAsyncFunc();
     }
-}
 
-public async Task GeneratePersonaAsync(UIEventArgs e)
-{
-    await GeneratePersonaAsyncFunc();
-}
-
-private static List<(int MonthNumber, string Month, int DaysInMonth)> Months = new List<(int MonthNumber, string Month, int DaysInMonth)>()
+    private static List<(int MonthNumber, string Month, int DaysInMonth)> Months = new List<(int MonthNumber, string Month, int DaysInMonth)>()
 {
 (MonthNumber: 1,  Month: "January",   DaysInMonth: 31),
 (MonthNumber: 2,  Month: "February",  DaysInMonth: 29),
