@@ -11,7 +11,7 @@
             <div class="row justify-content-between no-gutters">
                 <select class="form-control col-5" id="@(Id)-month" bind="@BirthMonthWithChangeEvent">
                     <option selected></option>
-                    @foreach (var month in Months)
+                    @foreach (var month in MonthDescription.AllMonths)
                     {
                         <option value="@month.MonthNumber">@month.Month</option>
                     }
@@ -44,6 +44,9 @@
     private Action<UserViewModel> ModelChanged { get; set; } = (model) => { };
 
     [Parameter]
+    private Func<UserViewModel, Task> ModelSubmittedAsync { get; set; } = (model) => Task.CompletedTask;
+
+    [Parameter]
     private bool IsCollapsed { get; set; } = false;
 
     [Parameter]
@@ -67,9 +70,9 @@
 
     public void MonthChanged()
     {
-        var month = Months.FirstOrDefault(m => m.MonthNumber == Model.BirthMonth);
+        var month = MonthDescription.AllMonths.FirstOrDefault(m => m.MonthNumber == Model.BirthMonth);
 
-        if (month != default((int MonthNumber, string Month, int DaysInMonth)))
+        if (month != default(MonthDescription))
         {
             DaysInMonth = month.DaysInMonth;
         }
@@ -81,22 +84,6 @@
 
     public async Task GeneratePersonaAsync(UIEventArgs e)
     {
+        await ModelSubmittedAsync(Model);
     }
-
-    private static List<(int MonthNumber, string Month, int DaysInMonth)> Months = new List<(int MonthNumber, string Month, int DaysInMonth)>()
-    {
-    (MonthNumber: 1,  Month: "January",   DaysInMonth: 31),
-    (MonthNumber: 2,  Month: "February",  DaysInMonth: 29),
-    (MonthNumber: 3,  Month: "March",     DaysInMonth: 31),
-    (MonthNumber: 4,  Month: "April",     DaysInMonth: 30),
-    (MonthNumber: 5,  Month: "May",       DaysInMonth: 31),
-    (MonthNumber: 6,  Month: "June",      DaysInMonth: 30),
-    (MonthNumber: 7,  Month: "July",      DaysInMonth: 31),
-    (MonthNumber: 8,  Month: "August",    DaysInMonth: 31),
-    (MonthNumber: 9,  Month: "September", DaysInMonth: 30),
-    (MonthNumber: 10, Month: "October",   DaysInMonth: 31),
-    (MonthNumber: 11, Month: "November",  DaysInMonth: 30),
-    (MonthNumber: 12, Month: "December",  DaysInMonth: 31)
-    };
-
 }
