@@ -9,6 +9,8 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using TechnologyCharacterGenerator.Child.Common;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Child.Server
 {
@@ -46,6 +48,23 @@ namespace TechnologyCharacterGenerator.Child.Server
                 if (context.Request.Path == "/_framework/blazor.js")
                 {
                     context.Request.Path = "/_framework/blazor.server.js";
+                }
+
+                await next.Invoke();
+            });
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/application.json")
+                {
+                    var application = new ChildApplicationModel()
+                    {
+                        ApplicationName = "Server",
+                        ApplicationUrl = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}"
+                    };
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(application));
+                    return;
                 }
 
                 await next.Invoke();

@@ -1,0 +1,18 @@
+﻿
+@typeparam TValue
+
+<Field Label="@Label" For="@Id">
+    <input type="text" readonly class="form-control-plaintext" id="@Id" value="@Value" />
+</Field>
+
+@functions {
+
+[Parameter]
+private string Label { get; set; }
+
+[Parameter]
+private string Id { get; set; }
+
+[Parameter]
+TValue Value { get; set; }
+}

@@ -30,6 +30,9 @@
     <Content Update="Pages\Field.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Pages\DisplayField.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Pages\CollapsiblePanel.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

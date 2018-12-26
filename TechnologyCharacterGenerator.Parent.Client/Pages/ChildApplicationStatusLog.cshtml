@@ -1,15 +1,52 @@
-﻿@using TechnologyCharacterGenerator.Foundation.Models;
+﻿@using TechnologyCharacterGenerator.Parent.Client.BusinessLogic
 
-<ol class="childApplicationStatusLog">
-    @foreach (var childApplicationStatusReport in ChildApplicationStatusReports)
-    {
-    <li>@childApplicationStatusReport.ApplicationName (@childApplicationStatusReport.CreatedOn): @childApplicationStatusReport.Status</li>
-    }
-</ol>
+@inject IChildApplicationStatusReportReceiver ChildApplicationStatusReportReceiver
+
+<div class="statusReport form-row">
+    <DisplayField Label="Application Load Time" Id="@($"applicationLoad-{ApplicationName}")" Value="@("20.5s")"/>
+    <DisplayField Label="Character Generation Time" Id="@($"characterGeneration-{ApplicationName}")" Value="@("10.3s")" />
+</div>
 
 
 @functions
 {
     [Parameter]
-    IEnumerable<ChildApplicationStatusReportModel> ChildApplicationStatusReports { get; set; }
+    private string ApplicationName { get; set; }
+
+    public ChildApplicationStatusViewModel Model { get; set; }
+
+    public void ReceiveChildApplicationStatusReport(ChildApplicationStatusReport childApplicationStatusReport)
+    {
+        if (childApplicationStatusReport.ApplicationName != ApplicationName) return;
+
+        switch (childApplicationStatusReport.ChildApplicationStatus)
+        {
+            case ChildApplicationStatuses.ApplicationLoadStarted:
+                Model.ApplicationLoadStartedOn = DateTime.Now;
+                Model.ApplicationLoadCompletedOn = default;
+                break;
+            case ChildApplicationStatuses.ApplicationLoadCompleted:
+                Model.ApplicationLoadCompletedOn = DateTime.Now;
+                break;
+            case ChildApplicationStatuses.CharacterGenerationStarted:
+                Model.CharacterGenerationStartedOn = DateTime.Now;
+                Model.CharacterGenerationCompletedOn = default;
+                break;
+            case ChildApplicationStatuses.CharacterGenerationCompleted:
+                Model.CharacterGenerationCompletedOn = DateTime.Now;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    }
+
+    protected override void OnInit()
+    {
+        Model = new ChildApplicationStatusViewModel()
+        {
+            ApplicationName = ApplicationName
+        };
+
+        ChildApplicationStatusReportReceiver.ChildApplicationStatusReportReceived += ReceiveChildApplicationStatusReport;
+    }
 }

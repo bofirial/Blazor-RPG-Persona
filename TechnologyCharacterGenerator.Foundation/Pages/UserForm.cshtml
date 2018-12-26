@@ -1,15 +1,15 @@
 ﻿@using TechnologyCharacterGenerator.Foundation.Models
 
 <CollapsiblePanel Id="@Id" Title="User Description" bind-IsCollapsed="@IsCollapsed">
-    <form onsubmit="@GeneratePersonaAsync">
+    <form class="form-row" onsubmit="@GeneratePersonaAsync">
 
         <Field For="@($"{Id}-name")" Label="Name">
             <input type="text" class="form-control" id="@(Id)-name" bind="@Model.Name" placeholder="Enter your name" />
         </Field>
 
         <Field For="@($"{Id}-month")" Label="Birth Date">
-            <div class="row justify-content-between no-gutters">
-                <select class="form-control col-5" id="@(Id)-month" bind="@BirthMonthWithChangeEvent">
+            <div class="d-flex">
+                <select class="form-control mr-2" id="@(Id)-month" bind="@BirthMonthWithChangeEvent">
                     <option selected></option>
                     @foreach (var month in MonthDescription.AllMonths)
                     {
@@ -17,7 +17,7 @@
                     }
                 </select>
 
-                <select class="form-control col-5" id="@(Id)-day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
+                <select class="form-control ml-2" id="@(Id)-day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
                     <option selected></option>
                     @for (int i = 1; i <= DaysInMonth; i++)
                     {
@@ -31,7 +31,7 @@
             <input type="text" class="form-control" id="@(Id)-favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
         </Field>
 
-        <button type="submit" class="btn btn-primary">Generate Character</button>
+        <button type="submit" class="btn btn-primary m-2">Generate Character</button>
     </form>
 </CollapsiblePanel>
 

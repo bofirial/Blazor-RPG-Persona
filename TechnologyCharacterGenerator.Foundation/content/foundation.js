@@ -3,7 +3,7 @@ window.foundation = {
     collapsiblePanel: {
         init: function (dotNetComponent, componentId, isCollapsed) {
             $(function() {
-                var $collapsiblePanel = $('#' + componentId);
+                var $collapsiblePanel = $('#' + componentId + '-content');
 
                 $collapsiblePanel.collapse(isCollapsed ? 'hide' : 'show');
 

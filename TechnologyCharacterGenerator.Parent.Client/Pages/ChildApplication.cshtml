@@ -1,33 +1,33 @@
-﻿@using TechnologyCharacterGenerator.Foundation.Models;
-@using Microsoft.Extensions.Logging
-@using TechnologyCharacterGenerator.Parent.Client.BusinessLogic
+﻿
+<li class="childApplication flex-fill mx-1 p-2 border rounded">
 
-@inject ILogger<ChildApplication> Logger
-@inject IChildApplicationStatusReportReceiver ChildApplicationStatusReportReceiver
+    <h5><a href="@ChildApplicationUrl" target="_blank">@ChildApplicationName (@ChildApplicationUrl)</a></h5>
 
-<li class="childApplication">
-    <ChildApplicationStatusLog ChildApplicationStatusReports="@ChildApplicationStatusReportReceiver.ChildApplicationStatusReports.Where(f => f.ApplicationName == ChildApplicationName)" />
-    <iframe class="childApplication @ChildApplicationName" src="about:blank" name="@ChildApplicationName"></iframe>
+    <ChildApplicationStatusLog ApplicationName="@ChildApplicationName"/>
+    
+    <hr />
+
+    <iframe class="childApplication @ChildApplicationName" src="about:blank" name="@ChildApplicationName" width="100%" height="600rem" frameBorder="0"></iframe>
 </li>
 
 @functions
 {
-[Parameter]
-string ChildApplicationName { get; set; }
+    [Parameter]
+    string ChildApplicationName { get; set; }
 
-[Parameter]
-string ChildApplicationUrl { get; set; }
+    [Parameter]
+    string ChildApplicationUrl { get; set; }
 
-protected override async Task OnAfterRenderAsync()
-{
-    await JSRuntime.Current.InvokeAsync<object>(
-        "statusReportSender.send", new ChildApplicationStatusReportModel()
-        {
-            ApplicationName = ChildApplicationName,
-            Status = "Starting Initial Child Application Request."
-        });
+    protected override async Task OnAfterRenderAsync()
+    {
+        await JSRuntime.Current.InvokeAsync<object>(
+            "statusReportSender.send", new ChildApplicationStatusReport()
+            {
+                ApplicationName = ChildApplicationName,
+                ChildApplicationStatus = ChildApplicationStatuses.ApplicationLoadStarted
+            });
 
-    await JSRuntime.Current.InvokeAsync<object>(
-        "childApplicationStarter.startChildApplication", ChildApplicationName, ChildApplicationUrl);
-}
+        await JSRuntime.Current.InvokeAsync<object>(
+            "childApplicationStarter.startChildApplication", ChildApplicationName, ChildApplicationUrl);
+    }
 }

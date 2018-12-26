@@ -23,17 +23,9 @@
 
 window.childApplicationStarter = {
   startChildApplication: function(childApplicationName, childApplicationUrl) {
-    console.log(
-      'Starting Child Application: ' +
-        childApplicationName +
-        ' (' +
-        childApplicationUrl +
-        ')'
-    );
+    console.log('Starting Child Application: ' + childApplicationName +' (' + childApplicationUrl + ')');
 
-    let frame = document.querySelector(
-      '.childApplication.' + childApplicationName
-    );
+    let frame = document.querySelector('.childApplication.' + childApplicationName);
 
     frame.src = childApplicationUrl;
   }

@@ -6,7 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using TechnologyCharacterGenerator.Child.Common;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Child.Client
 {
@@ -36,6 +39,23 @@ namespace TechnologyCharacterGenerator.Child.Client
                 if (context.Request.Path == "/_framework/blazor.js")
                 {
                     context.Request.Path = "/_framework/blazor.webassembly.js";
+                }
+
+                await next.Invoke();
+            });
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/application.json")
+                {
+                    var application = new ChildApplicationModel()
+                    {
+                        ApplicationName = "Client",
+                        ApplicationUrl = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}"
+                    };
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(application));
+                    return;
                 }
 
                 await next.Invoke();

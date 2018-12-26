@@ -6,10 +6,8 @@ namespace TechnologyCharacterGenerator.Parent.Client.BusinessLogic
 {
     public interface IChildApplicationStatusReportReceiver
     {
-        List<ChildApplicationStatusReportModel> ChildApplicationStatusReports { get; }
+        event Action<ChildApplicationStatusReport> ChildApplicationStatusReportReceived;
 
-        event Action<ChildApplicationStatusReportModel> ChildApplicationStatusReportReceived;
-
-        ChildApplicationStatusReportModel ReceiveStatusReport(ChildApplicationStatusReportModel frameApplicationStatusReport);
+        void ReceiveStatusReport(ChildApplicationStatusReport childApplicationStatusReport);
     }
 }

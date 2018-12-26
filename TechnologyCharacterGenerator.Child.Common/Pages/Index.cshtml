@@ -1,13 +1,15 @@
 ﻿@page "/"
+@using Newtonsoft.Json
 @using TechnologyCharacterGenerator.Foundation.Models
 @using TechnologyCharacterGenerator.Child.Common.BusinessLogic
 
+@inject HttpClient HttpClient
 @inject ITechnologyCharacterCreator TechnologyCharacterGenerator
 @inject ILogger<Index> Logger
 
-<h1>Technology Character Generator</h1>
+<h1>Technology Character Generator - @ApplicationName</h1>
 
-<UserForm Model="@UserViewModel" GeneratePersonaAsyncFunc="@GeneratePersonaAsync" />
+<UserForm Id="childUserForm" IsCollapsed="false" bind-Model="@UserViewModel" ModelSubmittedAsync="@GeneratePersonaAsync" />
 @if (null != TechnologyCharacterViewModel)
 {
     <TechnologyCharacter Model="@TechnologyCharacterViewModel" />
@@ -19,11 +21,21 @@
 
     TechnologyCharacterViewModel TechnologyCharacterViewModel { get; set; }
 
-    async Task GeneratePersonaAsync()
+    string ApplicationName { get; set; }
+
+    async Task GeneratePersonaAsync(UserViewModel userViewModel)
     {
         Logger.LogInformation("Generating Persona.");
-        TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(UserViewModel));
+        TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(userViewModel));
 
         this.StateHasChanged();
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        var application = await HttpClient.GetJsonAsync<ChildApplicationModel>("application.json");
+
+        Logger.LogInformation($"Application: {JsonConvert.SerializeObject(application)}");
+        ApplicationName = application.ApplicationName;
     }
 }

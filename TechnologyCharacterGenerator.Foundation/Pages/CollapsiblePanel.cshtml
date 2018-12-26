@@ -1,15 +1,15 @@
 ﻿@using Microsoft.JSInterop
 
-<div class="card">
-    <div class="card-header" id="@(Id)Heading">
+<div class="card" id="@Id">
+    <div class="card-header" id="@(Id)-heading">
         <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@Id" aria-expanded="@((!IsCollapsed).ToString().ToLower())" aria-controls="@Id">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@(Id)-content" aria-expanded="@((!IsCollapsed).ToString().ToLower())" aria-controls="@(Id)-content">
                 @Title
             </button>
         </h5>
     </div>
 
-    <div id="@Id" class="collapse" aria-labelledby="@(Id)Heading">
+    <div id="@(Id)-content" class="collapse" aria-labelledby="@(Id)-heading">
         <div class="card-body">
             @ChildContent
         </div>
