@@ -1,15 +1,19 @@
-﻿@using TechnologyCharacterGenerator.Foundation.Models
+﻿@using Microsoft.Extensions.Logging
+@using Newtonsoft.Json
+@using TechnologyCharacterGenerator.Foundation.Models
+
+@inject ILogger<UserForm> Logger
 
 <CollapsiblePanel Id="@Id" Title="User Description" bind-IsCollapsed="@IsCollapsed">
     <form class="form-row" onsubmit="@GeneratePersonaAsync">
 
         <Field For="@($"{Id}-name")" Label="Name">
-            <input type="text" class="form-control" id="@(Id)-name" bind="@Model.Name" placeholder="Enter your name" />
+            <input type="text" class="form-control" id="@(Id)-name" bind="@NameWithChangeEvent" placeholder="Enter your name" readonly="@ReadOnly" />
         </Field>
 
         <Field For="@($"{Id}-month")" Label="Birth Date">
             <div class="d-flex">
-                <select class="form-control mr-2" id="@(Id)-month" bind="@BirthMonthWithChangeEvent">
+                <select class="form-control mr-2" id="@(Id)-month" bind="@BirthMonthWithChangeEvent" readonly="@ReadOnly">
                     <option selected></option>
                     @foreach (var month in MonthDescription.AllMonths)
                     {
@@ -17,7 +21,7 @@
                     }
                 </select>
 
-                <select class="form-control ml-2" id="@(Id)-day" bind="@Model.BirthDay" disabled="@(DaysInMonth < 1)">
+                <select class="form-control ml-2" id="@(Id)-day" bind="@BirthDayWithChangeEvent" disabled="@(DaysInMonth < 1)" readonly="@ReadOnly">
                     <option selected></option>
                     @for (int i = 1; i <= DaysInMonth; i++)
                     {
@@ -28,17 +32,28 @@
         </Field>
 
         <Field For="@($"{Id}-favorite")" Label="Favorite Food">
-            <input type="text" class="form-control" id="@(Id)-favorite" bind="@Model.FavoriteFood" placeholder="Enter your favorite food" />
+            <input type="text" class="form-control" id="@(Id)-favorite" bind="@FavoriteFoodWithChangeEvent" placeholder="Enter your favorite food" readonly="@ReadOnly" />
         </Field>
 
-        <button type="submit" class="btn btn-primary m-2">Generate Character</button>
+        <button type="submit" class="btn btn-primary m-2" disabled="@ReadOnly">Generate Character</button>
     </form>
 </CollapsiblePanel>
 
 @functions
 {
+    private UserViewModel _model = new UserViewModel();
+
     [Parameter]
-    private UserViewModel Model { get; set; } = new UserViewModel();
+    private UserViewModel Model
+    {
+        get => _model;
+        set
+        {
+            _model = value;
+
+            MonthChanged();
+        }
+    }
 
     [Parameter]
     private Action<UserViewModel> ModelChanged { get; set; } = (model) => { };
@@ -55,6 +70,20 @@
     [Parameter]
     private string Id { get; set; }
 
+    [Parameter]
+    private bool ReadOnly { get; set; } = false;
+
+    public string NameWithChangeEvent
+    {
+        get => Model.Name;
+        set
+        {
+            Model.Name = value;
+
+            ModelChanged(Model);
+        }
+    }
+
     public int BirthMonthWithChangeEvent
     {
         get => Model.BirthMonth;
@@ -63,6 +92,30 @@
             Model.BirthMonth = value;
 
             MonthChanged();
+
+            ModelChanged(Model);
+        }
+    }
+
+    public int BirthDayWithChangeEvent
+    {
+        get => Model.BirthDay;
+        set
+        {
+            Model.BirthDay = value;
+
+            ModelChanged(Model);
+        }
+    }
+
+    public string FavoriteFoodWithChangeEvent
+    {
+        get => Model.FavoriteFood;
+        set
+        {
+            Model.FavoriteFood = value;
+
+            ModelChanged(Model);
         }
     }
 
@@ -85,5 +138,10 @@
     public async Task GeneratePersonaAsync(UIEventArgs e)
     {
         await ModelSubmittedAsync(Model);
+    }
+
+    protected override void OnInit()
+    {
+        Logger.LogInformation($"On Init - User Form");
     }
 }

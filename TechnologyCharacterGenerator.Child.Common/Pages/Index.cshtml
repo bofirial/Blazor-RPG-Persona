@@ -1,20 +1,22 @@
 ﻿@page "/"
 @using Newtonsoft.Json
-@using TechnologyCharacterGenerator.Foundation.Models
 @using TechnologyCharacterGenerator.Child.Common.BusinessLogic
 
 @inject HttpClient HttpClient
 @inject ITechnologyCharacterCreator TechnologyCharacterGenerator
 @inject ILogger<Index> Logger
 
+@inject IUserViewModelUpdateReceiver UserViewModelUpdateReceiver
+
 <h1>Technology Character Generator - @ApplicationName</h1>
 
-<UserForm Id="childUserForm" IsCollapsed="false" bind-Model="@UserViewModel" ModelSubmittedAsync="@GeneratePersonaAsync" />
+@*//TODO ReadOnly should be controlled by whether the app is hosted in the parent app or not.*@
+<UserForm Id="childUserForm" IsCollapsed="true" bind-Model="@UserViewModel" ModelSubmittedAsync="@GeneratePersonaAsync" ReadOnly="@true" />
+
 @if (null != TechnologyCharacterViewModel)
 {
     <TechnologyCharacter Model="@TechnologyCharacterViewModel" />
 }
-
 
 @functions {
     UserViewModel UserViewModel { get; set; } = new UserViewModel();
@@ -37,5 +39,17 @@
 
         Logger.LogInformation($"Application: {JsonConvert.SerializeObject(application)}");
         ApplicationName = application.ApplicationName;
+
+        await JSRuntime.Current.InvokeAsync<object>(
+            "userViewModelUpdater.init", new DotNetObjectRef(UserViewModelUpdateReceiver));
+
+        UserViewModelUpdateReceiver.UserViewModelUpdated += model =>
+        {
+            UserViewModel = model;
+
+            this.StateHasChanged();
+        };
+
+        UserViewModelUpdateReceiver.UserViewModelSubmitted += async model => await GeneratePersonaAsync(model);
     }
 }

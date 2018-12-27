@@ -38,6 +38,8 @@ namespace TechnologyCharacterGenerator.Child.Common
             services.AddScoped<ITechnologyCharacterPropertyGenerator, ConstitutionTechnologyCharacterPropertyGenerator>();
             services.AddScoped<ITechnologyCharacterPropertyGenerator, PerceptionTechnologyCharacterPropertyGenerator>();
 
+            services.AddScoped<IUserViewModelUpdateReceiver, UserViewModelUpdateReceiver>();
+
             // Server Side Blazor doesn't register HttpClient by default
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
             {

@@ -6,7 +6,7 @@
 
 <h1>Technology Character Generator</h1>
 
-<UserForm Id="parentUserForm" IsCollapsed="false" bind-Model="@UserViewModel" />
+<UserForm Id="parentUserForm" IsCollapsed="false" bind-Model="@UserViewModel" ModelSubmittedAsync="@SubmitChildApplicationUserFormsAsync" />
 
 <ol class="list-unstyled d-flex my-3">
 
@@ -21,24 +21,32 @@
 
 @functions
 {
-private List<ChildApplicationModel> ChildApplications;
+    private List<ChildApplicationModel> ChildApplications;
 
-protected override async Task OnInitAsync()
-{
-    ChildApplications = await HttpClient.GetJsonAsync<List<ChildApplicationModel>>("api/child-applications");
-
-    await JSRuntime.Current.InvokeAsync<object>(
-        "statusReportSender.init", new DotNetObjectRef(ChildApplicationStatusReportReceiver));
-}
-
-private UserViewModel _userViewModel = new UserViewModel();
-private UserViewModel UserViewModel
-{
-    get => _userViewModel;
-    set
+    protected override async Task OnInitAsync()
     {
-        //TODO: Update Child Applications' User View Models
-        _userViewModel = value;
+        ChildApplications = await HttpClient.GetJsonAsync<List<ChildApplicationModel>>("api/child-applications");
+
+        await JSRuntime.Current.InvokeAsync<object>(
+            "statusReportSender.init", new DotNetObjectRef(ChildApplicationStatusReportReceiver));
     }
-}
+
+    private UserViewModel _userViewModel = new UserViewModel();
+    private UserViewModel UserViewModel
+    {
+        get => _userViewModel;
+        set
+        {
+            _userViewModel = value;
+
+            JSRuntime.Current.InvokeAsync<object>(
+                "childApplicationUserViewModelUpdater.update", value);
+        }
+    }
+
+    async Task SubmitChildApplicationUserFormsAsync(UserViewModel userViewModel)
+    {
+        await JSRuntime.Current.InvokeAsync<object>(
+            "childApplicationUserViewModelUpdater.submit", userViewModel);
+    }
 }

@@ -28,6 +28,6 @@
             });
 
         await JSRuntime.Current.InvokeAsync<object>(
-            "childApplicationStarter.startChildApplication", ChildApplicationName, ChildApplicationUrl);
+            "childApplicationManager.startChildApplication", ChildApplicationName, ChildApplicationUrl);
     }
 }
