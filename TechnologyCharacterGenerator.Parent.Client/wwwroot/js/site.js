@@ -10,9 +10,10 @@
             console.error('statusReportReceiver has not been initialized');
             return;
         }
-
-        statusReportSender.statusReportReceiver
-            .invokeMethodAsync('ReceiveStatusReport', statusReport);
+        //window.setTimeout(function () {
+            statusReportSender.statusReportReceiver
+                .invokeMethodAsync('ReceiveStatusReport', statusReport);
+        //}, 0);
     }
 };
 
@@ -42,7 +43,7 @@ window.childApplicationUserViewModelUpdater = {
 
     update: function (userViewModel) {
         console.log('childApplicationUserViewModelUpdater - Update: ' + JSON.stringify(userViewModel));
-        window.childApplicationManager.executeChildApplicationAction('userViewModelUpdater.update', [userViewModel]);
+        window.childApplicationwiManager.executeChildApplicationAction('userViewModelUpdater.update', [userViewModel]);
     },
     submit: function (userViewModel) {
         window.childApplicationManager.executeChildApplicationAction('userViewModelUpdater.submit', [userViewModel]);
