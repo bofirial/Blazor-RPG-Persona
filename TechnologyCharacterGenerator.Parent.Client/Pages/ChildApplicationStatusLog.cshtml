@@ -1,52 +1,138 @@
-﻿@using TechnologyCharacterGenerator.Parent.Client.BusinessLogic
+﻿@using System.Threading
+@using TechnologyCharacterGenerator.Parent.Client.BusinessLogic
+
+@implements IDisposable
 
 @inject IChildApplicationStatusReportReceiver ChildApplicationStatusReportReceiver
+@inject ILogger<ChildApplicationStatusLog> Logger
 
 <div class="statusReport form-row">
-    <DisplayField Label="Application Load Time" Id="@($"applicationLoad-{ApplicationName}")" Value="@("20.5s")"/>
-    <DisplayField Label="Character Generation Time" Id="@($"characterGeneration-{ApplicationName}")" Value="@("10.3s")" />
+    @*<DisplayField Label="Application Load Time" Id="@($"applicationLoad-{ApplicationName}")" Value="@ApplicationLoadSeconds" />
+        <DisplayField Label="Character Generation Time" Id="@($"characterGeneration-{ApplicationName}")" Value="@CharacterGenerationSeconds" />*@
+    @if (!string.IsNullOrEmpty(ApplicationLoadSeconds))
+    {
+        <h3>@ApplicationLoadSeconds Seconds</h3>
+    }
+    <h3>Application Load: @Model.ApplicationLoadStartedOn</h3>
 </div>
 
 
 @functions
 {
-    [Parameter]
-    private string ApplicationName { get; set; }
+[Parameter]
+private string ApplicationName { get; set; }
 
-    public ChildApplicationStatusViewModel Model { get; set; }
+private ChildApplicationStatusViewModel Model { get; set; }
 
-    public void ReceiveChildApplicationStatusReport(ChildApplicationStatusReport childApplicationStatusReport)
+private string ApplicationLoadSeconds { get; set; }
+
+private string CharacterGenerationSeconds { get; set; }
+
+public Timer Timer { get; set; }
+
+public void ReceiveChildApplicationStatusReport(ChildApplicationStatusReport childApplicationStatusReport)
+{
+    if (childApplicationStatusReport.ApplicationName != ApplicationName) return;
+
+    switch (childApplicationStatusReport.ChildApplicationStatus)
     {
-        if (childApplicationStatusReport.ApplicationName != ApplicationName) return;
+        case ChildApplicationStatuses.ApplicationLoadStarted:
+            Model.ApplicationLoadStartedOn = DateTime.Now;
+            Model.ApplicationLoadCompletedOn = default;
+            break;
+        case ChildApplicationStatuses.ApplicationLoadCompleted:
+            Model.ApplicationLoadCompletedOn = DateTime.Now;
+            break;
+        case ChildApplicationStatuses.CharacterGenerationStarted:
+            Model.CharacterGenerationStartedOn = DateTime.Now;
+            Model.CharacterGenerationCompletedOn = default;
+            break;
+        case ChildApplicationStatuses.CharacterGenerationCompleted:
+            Model.CharacterGenerationCompletedOn = DateTime.Now;
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
 
-        switch (childApplicationStatusReport.ChildApplicationStatus)
+    //CalculateTimes(null);
+}
+
+public void CalculateTimes(object state)
+{
+    //if (Timer != null)
+    //{
+    //    Timer?.Dispose();
+
+    //    Timer = null;
+    //}
+
+    if (Model.ApplicationLoadStartedOn != default)
+    {
+        var applicationLoadTarget = Model.ApplicationLoadCompletedOn;
+
+        if (applicationLoadTarget == default)
         {
-            case ChildApplicationStatuses.ApplicationLoadStarted:
-                Model.ApplicationLoadStartedOn = DateTime.Now;
-                Model.ApplicationLoadCompletedOn = default;
-                break;
-            case ChildApplicationStatuses.ApplicationLoadCompleted:
-                Model.ApplicationLoadCompletedOn = DateTime.Now;
-                break;
-            case ChildApplicationStatuses.CharacterGenerationStarted:
-                Model.CharacterGenerationStartedOn = DateTime.Now;
-                Model.CharacterGenerationCompletedOn = default;
-                break;
-            case ChildApplicationStatuses.CharacterGenerationCompleted:
-                Model.CharacterGenerationCompletedOn = DateTime.Now;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+            applicationLoadTarget = DateTime.Now;
+
+            //Timer = new Timer(CalculateTimes, null, 1000, Timeout.Infinite);
         }
+
+        ApplicationLoadSeconds = GetElapsedSecondsString(Model.ApplicationLoadStartedOn, applicationLoadTarget);
     }
 
-    protected override void OnInit()
+    if (Model.CharacterGenerationStartedOn != default)
     {
-        Model = new ChildApplicationStatusViewModel()
-        {
-            ApplicationName = ApplicationName
-        };
+        var characterGenerationTarget = Model.CharacterGenerationCompletedOn;
 
-        ChildApplicationStatusReportReceiver.ChildApplicationStatusReportReceived += ReceiveChildApplicationStatusReport;
+        if (characterGenerationTarget == default)
+        {
+            characterGenerationTarget = DateTime.Now;
+
+            //Timer = new Timer(CalculateTimes, null, 1000, Timeout.Infinite);
+        }
+
+        CharacterGenerationSeconds = GetElapsedSecondsString(Model.CharacterGenerationStartedOn, characterGenerationTarget);
     }
+
+    Logger.LogInformation($"Application Load: {ApplicationLoadSeconds} Model.ApplicationLoadStartedOn: {Model.ApplicationLoadStartedOn} ({ApplicationName})");
+
+    StateHasChanged();
+}
+
+public string GetElapsedSecondsString(DateTime from, DateTime to)
+{
+    return $"{(to - @from).TotalSeconds:0.0}s";
+}
+
+protected override void OnInit()
+{
+    Model = new ChildApplicationStatusViewModel()
+    {
+        ApplicationName = ApplicationName,
+        ApplicationLoadStartedOn = DateTime.Now.AddSeconds(-10)
+    };
+
+    Logger.LogInformation($"ChildApplicationStatusReportReceived Event Registered");
+
+    Timer = new Timer(CalculateTimes, null, 0, 100);
+
+    ChildApplicationStatusReportReceiver.ChildApplicationStatusReportReceived += ReceiveChildApplicationStatusReport;
+}
+
+protected override bool ShouldRender()
+{
+    Logger.LogInformation($"ChildApplicationStatusReportReceived ShouldRender - {DateTime.Now}");
+
+    return true;
+}
+
+public void Dispose()
+{
+    if (Timer != null)
+    {
+        Timer?.Dispose();
+
+        Timer = null;
+    }
+}
 }
