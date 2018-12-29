@@ -5,7 +5,7 @@
 
 @inject IChildApplicationStatusReportReceiver ChildApplicationStatusReportReceiver
 
-<div class="statusReport form-row">
+<div class="statusReport form-row mx-3">
     <DisplayField Label="Application Load Time" Id="@($"applicationLoad-{ApplicationName}")" Value="@ApplicationLoadSeconds" />
     <DisplayField Label="Character Generation Time" Id="@($"characterGeneration-{ApplicationName}")" Value="@CharacterGenerationSeconds" />
 </div>
