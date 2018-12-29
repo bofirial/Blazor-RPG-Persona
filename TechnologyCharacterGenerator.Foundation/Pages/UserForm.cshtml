@@ -1,8 +1,4 @@
-﻿@using Microsoft.Extensions.Logging
-@using Newtonsoft.Json
-@using TechnologyCharacterGenerator.Foundation.Models
-
-@inject ILogger<UserForm> Logger
+﻿@using TechnologyCharacterGenerator.Foundation.Models
 
 <CollapsiblePanel Id="@Id" Title="User Description" bind-IsCollapsed="@IsCollapsed">
     <form class="form-row" id="@($"{Id}-form")" onsubmit="@GeneratePersonaAsync">
@@ -35,7 +31,7 @@
             <input type="text" class="form-control" id="@(Id)-favorite" bind="@FavoriteFoodWithChangeEvent" placeholder="Enter your favorite food" readonly="@ReadOnly" />
         </Field>
 
-        <button type="submit" class="btn btn-primary m-2" disabled="@ReadOnly">Generate Character</button>
+        <button type="submit" class="btn btn-primary m-2" >Generate Character</button>
     </form>
 </CollapsiblePanel>
 
@@ -138,10 +134,5 @@
     public async Task GeneratePersonaAsync(UIEventArgs e)
     {
         await ModelSubmittedAsync(Model);
-    }
-
-    protected override void OnInit()
-    {
-        Logger.LogInformation($"On Init - User Form");
     }
 }

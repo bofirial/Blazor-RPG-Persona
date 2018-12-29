@@ -50,9 +50,8 @@ window.childApplicationUserViewModelUpdater = {
 };
 
 window.addEventListener('message', function (event) {
-    //TODO: Check if message is from a Child Site
 
-    if (event.origin == window.location.origin) {
+    if (event.origin === window.location.origin) {
         return;
     }
 

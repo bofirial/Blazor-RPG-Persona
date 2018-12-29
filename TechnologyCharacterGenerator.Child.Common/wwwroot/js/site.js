@@ -48,23 +48,23 @@ window.statusReportSender = {
 };
 
 window.parentApplicationManager = {
+    applicationIsRunningInAnIFrame: function() {
+        return window.parent && window.parent != window;
+    },
     executeParentApplicationAction: function (actionPath, parameters) {
 
-        //TODO: Handle Stand Alone Mode
-
-        window.parent
-            .postMessage({ actionPath: actionPath, parameters: parameters }, '*');
+        if (window.parentApplicationManager.applicationIsRunningInAnIFrame()) {
+            window.parent
+                .postMessage({ actionPath: actionPath, parameters: parameters }, '*');
+        }
     }
 };
 
 window.addEventListener('message', function (event) {
-    //TODO: Check if message is from Parent Site
 
-    if (event.origin == window.location.origin) {
+    if (event.origin === window.location.origin) {
         return;
     }
-
-    console.log('Message Event: ' + JSON.stringify(event.data));
 
     var eventData = event.data,
         actionPathParts = eventData.actionPath.split('.'),

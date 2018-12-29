@@ -11,8 +11,7 @@
 
 <h1>Technology Character Generator - @ApplicationName</h1>
 
-@*//TODO ReadOnly should be controlled by whether the app is hosted in the parent app or not.*@
-<UserForm Id="childUserForm" IsCollapsed="true" bind-Model="@UserViewModel" ModelSubmittedAsync="@GeneratePersonaAsync" ReadOnly="@true" />
+<UserForm Id="childUserForm" IsCollapsed="true" bind-Model="@UserViewModel" ModelSubmittedAsync="@GeneratePersonaAsync" ReadOnly="@IsRunningInAnIFrame" />
 
 @if (null != TechnologyCharacterViewModel)
 {
@@ -26,6 +25,8 @@
 
     string ApplicationName { get; set; }
 
+    bool IsRunningInAnIFrame { get; set; } = false;
+
     async Task GeneratePersonaAsync(UserViewModel userViewModel)
     {
         TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(userViewModel));
@@ -38,12 +39,15 @@
     protected override async Task OnInitAsync()
     {
         ApplicationName = await ApplicationNameProvider.GetApplicationNameAsync();
-                
+
         await JSRuntime.Current.InvokeAsync<object>(
             "setApplicationName", ApplicationName);
 
         await JSRuntime.Current.InvokeAsync<object>(
             "userViewModelUpdater.init", new DotNetObjectRef(UserViewModelUpdateReceiver));
+
+        IsRunningInAnIFrame = await JSRuntime.Current.InvokeAsync<bool>(
+        "parentApplicationManager.applicationIsRunningInAnIFrame");
 
         UserViewModelUpdateReceiver.UserViewModelUpdated += model =>
         {
@@ -55,7 +59,7 @@
         UserViewModelUpdateReceiver.UserViewModelSubmitted += async model => await GeneratePersonaAsync(model);
 
         await StatusReportSender.SendStatusReportAsync(ChildApplicationStatuses.ApplicationLoadCompleted);
-        
+
         await JSRuntime.Current.InvokeAsync<object>(
             "statusReportSender.prepareCharacterGenerationStartedStatusReport", new ChildApplicationStatusReport()
             {
