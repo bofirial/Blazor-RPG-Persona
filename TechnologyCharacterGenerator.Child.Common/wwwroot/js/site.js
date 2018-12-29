@@ -1,4 +1,8 @@
-﻿window.userViewModelUpdater = {
+﻿window.setApplicationName = function (applicationName) {
+    window.applicationName = applicationName;
+};
+
+window.userViewModelUpdater = {
     init: function (dotNetUserViewModelUpdateReceiver) {
         userViewModelUpdater.userViewModelUpdateReceiver = dotNetUserViewModelUpdateReceiver;
     },
@@ -24,6 +28,22 @@
 
         userViewModelUpdater.userViewModelUpdateReceiver
             .invokeMethodAsync('SubmitUserViewModel', userViewModel);
+    }
+};
+
+window.statusReportSender = {
+    send: function (statusReport) {
+        parentApplicationManager.executeParentApplicationAction('statusReportSender.send', [statusReport]);
+    }
+};
+
+window.parentApplicationManager = {
+    executeParentApplicationAction: function (actionPath, parameters) {
+
+        //TODO: Handle Stand Alone Mode
+
+        window.parent
+            .postMessage({ actionPath: actionPath, parameters: parameters }, '*');
     }
 };
 

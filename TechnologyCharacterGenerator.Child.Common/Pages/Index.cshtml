@@ -4,9 +4,10 @@
 
 @inject HttpClient HttpClient
 @inject ITechnologyCharacterCreator TechnologyCharacterGenerator
-@inject ILogger<Index> Logger
 
 @inject IUserViewModelUpdateReceiver UserViewModelUpdateReceiver
+@inject IApplicationNameProvider ApplicationNameProvider
+@inject IStatusReportSender StatusReportSender
 
 <h1>Technology Character Generator - @ApplicationName</h1>
 
@@ -27,7 +28,6 @@
 
     async Task GeneratePersonaAsync(UserViewModel userViewModel)
     {
-        Logger.LogInformation("Generating Persona.");
         TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(userViewModel));
 
         this.StateHasChanged();
@@ -35,10 +35,7 @@
 
     protected override async Task OnInitAsync()
     {
-        var application = await HttpClient.GetJsonAsync<ChildApplicationModel>("application.json");
-
-        Logger.LogInformation($"Application: {JsonConvert.SerializeObject(application)}");
-        ApplicationName = application.ApplicationName;
+        ApplicationName = await ApplicationNameProvider.GetApplicationNameAsync();
 
         await JSRuntime.Current.InvokeAsync<object>(
             "userViewModelUpdater.init", new DotNetObjectRef(UserViewModelUpdateReceiver));
@@ -51,5 +48,7 @@
         };
 
         UserViewModelUpdateReceiver.UserViewModelSubmitted += async model => await GeneratePersonaAsync(model);
+
+        await StatusReportSender.SendStatusReportAsync(ChildApplicationStatuses.ApplicationLoadCompleted);
     }
 }

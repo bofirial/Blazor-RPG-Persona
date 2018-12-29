@@ -40,6 +40,9 @@ namespace TechnologyCharacterGenerator.Child.Common
 
             services.AddScoped<IUserViewModelUpdateReceiver, UserViewModelUpdateReceiver>();
 
+            services.AddScoped<IApplicationNameProvider, ApplicationNameProvider>();
+            services.AddScoped<IStatusReportSender, StatusReportSender>();
+
             // Server Side Blazor doesn't register HttpClient by default
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
             {

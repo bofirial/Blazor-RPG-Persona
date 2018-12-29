@@ -48,3 +48,25 @@ window.childApplicationUserViewModelUpdater = {
         window.childApplicationManager.executeChildApplicationAction('userViewModelUpdater.submit', [userViewModel]);
     }
 };
+
+window.addEventListener('message', function (event) {
+    //TODO: Check if message is from a Child Site
+
+    if (event.origin == window.location.origin) {
+        return;
+    }
+
+    console.log('Message Event: ' + JSON.stringify(event.data));
+
+    var eventData = event.data,
+        actionPathParts = eventData.actionPath.split('.'),
+        obj = window;
+
+    for (var i in actionPathParts) {
+        var property = actionPathParts[i];
+
+        obj = obj[property];
+    }
+
+    obj.apply(null, eventData.parameters);
+});
