@@ -5,7 +5,7 @@
 @inject ILogger<UserForm> Logger
 
 <CollapsiblePanel Id="@Id" Title="User Description" bind-IsCollapsed="@IsCollapsed">
-    <form class="form-row" onsubmit="@GeneratePersonaAsync">
+    <form class="form-row" id="@($"{Id}-form")" onsubmit="@GeneratePersonaAsync">
 
         <Field For="@($"{Id}-name")" Label="Name">
             <input type="text" class="form-control" id="@(Id)-name" bind="@NameWithChangeEvent" placeholder="Enter your name" readonly="@ReadOnly" />

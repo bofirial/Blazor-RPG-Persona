@@ -26,12 +26,22 @@ window.userViewModelUpdater = {
             return;
         }
 
+        window.statusReportSender.send(window.statusReportSender.characterGenerationStartedStatusReport);
+
         userViewModelUpdater.userViewModelUpdateReceiver
             .invokeMethodAsync('SubmitUserViewModel', userViewModel);
     }
 };
 
 window.statusReportSender = {
+    prepareCharacterGenerationStartedStatusReport: function (characterGenerationStartedStatusReport) {
+        statusReportSender.characterGenerationStartedStatusReport = characterGenerationStartedStatusReport;
+
+        document.getElementById("childUserForm-form").addEventListener('submit', function() {
+            window.statusReportSender.send(window.statusReportSender.characterGenerationStartedStatusReport);
+        }, false);
+    },
+    characterGenerationStartedStatusReport: null,
     send: function (statusReport) {
         parentApplicationManager.executeParentApplicationAction('statusReportSender.send', [statusReport]);
     }

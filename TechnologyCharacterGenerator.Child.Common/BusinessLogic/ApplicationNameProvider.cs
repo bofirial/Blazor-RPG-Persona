@@ -15,7 +15,7 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
             this.httpClient = httpClient;
         }
 
-        public static string ApplicationName { get; set; }
+        private static string ApplicationName { get; set; }
 
         public async Task<string> GetApplicationNameAsync()
         {
@@ -24,9 +24,6 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
                 var application = await httpClient.GetJsonAsync<ChildApplicationModel>("application.json");
 
                 ApplicationName = application.ApplicationName;
-                
-                await JSRuntime.Current.InvokeAsync<object>(
-                    "setApplicationName", ApplicationName);
             }
 
             return ApplicationName;

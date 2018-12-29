@@ -31,11 +31,16 @@
         TechnologyCharacterViewModel = await Task.Run(() => TechnologyCharacterGenerator.GenerateTechnologyCharacter(userViewModel));
 
         this.StateHasChanged();
+
+        await StatusReportSender.SendStatusReportAsync(ChildApplicationStatuses.CharacterGenerationCompleted);
     }
 
     protected override async Task OnInitAsync()
     {
         ApplicationName = await ApplicationNameProvider.GetApplicationNameAsync();
+                
+        await JSRuntime.Current.InvokeAsync<object>(
+            "setApplicationName", ApplicationName);
 
         await JSRuntime.Current.InvokeAsync<object>(
             "userViewModelUpdater.init", new DotNetObjectRef(UserViewModelUpdateReceiver));
@@ -50,5 +55,12 @@
         UserViewModelUpdateReceiver.UserViewModelSubmitted += async model => await GeneratePersonaAsync(model);
 
         await StatusReportSender.SendStatusReportAsync(ChildApplicationStatuses.ApplicationLoadCompleted);
+        
+        await JSRuntime.Current.InvokeAsync<object>(
+            "statusReportSender.prepareCharacterGenerationStartedStatusReport", new ChildApplicationStatusReport()
+            {
+                ApplicationName = ApplicationName,
+                ChildApplicationStatus = ChildApplicationStatuses.CharacterGenerationStarted
+            });
     }
 }
