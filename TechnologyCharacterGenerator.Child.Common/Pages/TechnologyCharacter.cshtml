@@ -1,6 +1,4 @@
-﻿
-@using __Blazor.TechnologyCharacterGenerator.Child.Common
-@using __Blazor.TechnologyCharacterGenerator.Child.Common.Models
+﻿@using __Blazor.TechnologyCharacterGenerator.Child.Common.Models
 
 <div class="technologyCharacter form-row m-3">
     <TechnologyCharacterProperty Model="@Model" Property="@(m => m.CharacterName)" />
@@ -15,15 +13,13 @@
 
     <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Intelligence)" />
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Charisma)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Programming)" />
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Wisdom)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Documentation)" />
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Luck)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Testing)" />
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Constitution)" />
-
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Perception)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Management)" />
 </div>
 
 @functions

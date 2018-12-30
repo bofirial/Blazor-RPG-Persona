@@ -1,7 +1,6 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Blazor;
-using Microsoft.JSInterop;
 using TechnologyCharacterGenerator.Foundation.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic

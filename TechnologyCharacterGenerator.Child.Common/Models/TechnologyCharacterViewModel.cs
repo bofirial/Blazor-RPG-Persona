@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using TechnologyCharacterGenerator.Child.Common.Models;
+﻿using System.ComponentModel;
 
 //HACK: There appears to be an issue with the IL Generator in Blazor when using Generic Components that causes namespace issues.  Putting this model in the __Blazor namespace is a workaround.
 namespace __Blazor.TechnologyCharacterGenerator.Child.Common.Models
@@ -16,8 +11,6 @@ namespace __Blazor.TechnologyCharacterGenerator.Child.Common.Models
         [DisplayName("Character Class")]
         public string Class { get; set; }
 
-        public ClassTypes ClassType { get; set; }
-
         [DisplayName("Hit Points")]
         public ushort HitPoints { get; set; }
 
@@ -27,15 +20,13 @@ namespace __Blazor.TechnologyCharacterGenerator.Child.Common.Models
 
         public ushort Intelligence { get; set; }
 
-        public ushort Charisma { get; set; }
+        public ushort Programming { get; set; }
 
-        public ushort Wisdom { get; set; }
+        public ushort Testing { get; set; }
 
-        public ushort Luck { get; set; }
+        public ushort Documentation { get; set; }
 
-        public ushort Constitution { get; set; }
-
-        public ushort Perception { get; set; }
+        public ushort Management { get; set; }
 
         public string UserHash { get; set; }
     }

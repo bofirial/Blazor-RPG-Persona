@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyCharacter
 {
@@ -22,15 +18,13 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
             services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
                 new TechnologyCharacterPropertyGenerator<ushort>(5, t => t.Intelligence, h => h));
             services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
-                new TechnologyCharacterPropertyGenerator<ushort>(6, t => t.Charisma, h => h));
+                new TechnologyCharacterPropertyGenerator<ushort>(6, t => t.Programming, h => h));
             services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
-                new TechnologyCharacterPropertyGenerator<ushort>(7, t => t.Wisdom, h => h));
+                new TechnologyCharacterPropertyGenerator<ushort>(7, t => t.Documentation, h => h));
             services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
-                new TechnologyCharacterPropertyGenerator<ushort>(8, t => t.Luck, h => h));
+                new TechnologyCharacterPropertyGenerator<ushort>(8, t => t.Testing, h => h));
             services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
-                new TechnologyCharacterPropertyGenerator<ushort>(9, t => t.Constitution, h => h));
-            services.AddScoped<ITechnologyCharacterPropertyGenerator>(sp =>
-                new TechnologyCharacterPropertyGenerator<ushort>(10, t => t.Perception, h => h));
+                new TechnologyCharacterPropertyGenerator<ushort>(9, t => t.Management, h => h));
 
             return services;
         }
