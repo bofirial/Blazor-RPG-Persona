@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Blazor.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyCharacter;
 
 namespace TechnologyCharacterGenerator.Child.Common
 {
@@ -25,18 +26,7 @@ namespace TechnologyCharacterGenerator.Child.Common
 
             services.AddScoped<ITechnologyCharacterCreator, TechnologyCharacterCreator>();
 
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, CharacterNameTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, CharacterClassTechnologyCharacterPropertyGenerator>();
-
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, HitPointsTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, StrengthTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, AgilityTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, IntelligenceTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, CharismaTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, WisdomTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, LuckTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, ConstitutionTechnologyCharacterPropertyGenerator>();
-            services.AddScoped<ITechnologyCharacterPropertyGenerator, PerceptionTechnologyCharacterPropertyGenerator>();
+            services.AddTechnologyCharacterPropertyGenerators();
 
             services.AddScoped<IUserViewModelUpdateReceiver, UserViewModelUpdateReceiver>();
 
