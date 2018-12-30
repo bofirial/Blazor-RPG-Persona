@@ -9,6 +9,7 @@ using TechnologyCharacterGenerator.Foundation.Models;
 using TechnologyCharacterGenerator.Child.Common.Models;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using __Blazor.TechnologyCharacterGenerator.Child.Common.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
 {

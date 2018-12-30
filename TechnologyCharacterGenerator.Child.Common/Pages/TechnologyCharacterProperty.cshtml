@@ -1,0 +1,46 @@
+﻿@using System.ComponentModel
+@using System.Linq
+@using System.Linq.Expressions
+@using System.Reflection
+@using __Blazor.TechnologyCharacterGenerator.Child.Common.Models
+@typeparam TProperty
+
+<DisplayField Id="@Id" Label="@DisplayName" Value="@Value" />
+
+@functions
+{
+    [Parameter]
+    TechnologyCharacterViewModel Model { get; set; }
+
+    [Parameter]
+    Expression<Func<TechnologyCharacterViewModel, TProperty>> Property { get; set; }
+
+    MemberInfo MemberInfo
+    {
+        get
+        {
+            var memberExpr = Property?.Body as MemberExpression;
+
+            return memberExpr?.Member;
+        }
+    }
+
+    string Id => MemberInfo?.Name;
+
+    string DisplayName
+    {
+        get
+        {
+            var attr = (DisplayNameAttribute)MemberInfo?.GetCustomAttributes(typeof(DisplayNameAttribute), false).SingleOrDefault();
+
+            if (attr == null)
+            {
+                return MemberInfo?.Name;
+            }
+
+            return attr.DisplayName;
+        }
+    }
+
+    TProperty Value => Property != null ? Property.Compile()(Model) : default(TProperty);
+}

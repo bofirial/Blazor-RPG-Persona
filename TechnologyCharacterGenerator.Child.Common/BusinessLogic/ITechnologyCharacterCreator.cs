@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechnologyCharacterGenerator.Foundation.Models;
+using __Blazor.TechnologyCharacterGenerator.Child.Common.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
 {

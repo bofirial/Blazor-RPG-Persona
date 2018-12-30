@@ -49,7 +49,7 @@ window.statusReportSender = {
 
 window.parentApplicationManager = {
     applicationIsRunningInAnIFrame: function() {
-        return window.parent && window.parent != window;
+        return window.parent && window.parent !== window;
     },
     executeParentApplicationAction: function (actionPath, parameters) {
 

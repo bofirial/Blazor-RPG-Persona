@@ -2,6 +2,7 @@
 using System.Linq;
 using TechnologyCharacterGenerator.Foundation.Models;
 using TechnologyCharacterGenerator.Child.Common.Models;
+using __Blazor.TechnologyCharacterGenerator.Child.Common.Models;
 
 namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic
 {
