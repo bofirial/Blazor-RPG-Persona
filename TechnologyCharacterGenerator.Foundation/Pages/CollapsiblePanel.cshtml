@@ -3,9 +3,9 @@
 <div class="card" id="@Id">
     <div class="card-header" id="@(Id)-heading">
         <h5 class="mb-0">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#@(Id)-content" aria-expanded="@((!IsCollapsed).ToString().ToLower())" aria-controls="@(Id)-content">
-                @Title
-            </button>
+            <a class="btn btn-link" data-toggle="collapse" data-target="#@(Id)-content" aria-expanded="@((!IsCollapsed).ToString().ToLower())" aria-controls="@(Id)-content">
+                @Title <i class="fas @((IsCollapsed ? "fa-caret-down" : "fa-caret-up")) ml-1"></i>
+            </a>
         </h5>
     </div>
 
