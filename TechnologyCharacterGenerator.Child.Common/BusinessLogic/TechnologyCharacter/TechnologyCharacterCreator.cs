@@ -31,6 +31,7 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
 
             var technologyCharacter = new TechnologyCharacterViewModel
             {
+                CharacterTraits = new List<string>(),
                 UserHash = string.Join(string.Empty, userHashArray)
             };
 
@@ -60,12 +61,19 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
 
         private static string[] CreateUserHashArray(string user)
         {
-            var bytes = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(user));
+            var userHashString = HashString(user); //32 Characters
 
-            var hashString = string.Join(string.Empty,
-                    bytes.Select(b => b.ToString("X2")));
+            userHashString += HashString(userHashString); //64 Characters
 
-            return hashString.Select(s => s.ToString()).ToArray();
+            return userHashString.Select(s => s.ToString()).ToArray();
+        }
+
+        private static string HashString(string input)
+        {
+            var bytes = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            return string.Join(string.Empty,
+                bytes.Select(b => b.ToString("X2")));
         }
     }
 }

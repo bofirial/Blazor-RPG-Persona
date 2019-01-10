@@ -20,6 +20,16 @@
     <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Testing)" />
 
     <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Management)" />
+    
+    <div class="form-group col-12 px-2">
+        <label>Character Traits</label>
+        <ul class="list-group">
+            @foreach (var trait in Model.CharacterTraits)
+            {
+                <li class="list-group-item font-weight-bold">@trait</li>
+            }
+        </ul>
+    </div>
 </div>
 
 @functions
