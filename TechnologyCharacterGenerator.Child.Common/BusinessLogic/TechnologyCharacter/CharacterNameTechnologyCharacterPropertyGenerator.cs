@@ -22,7 +22,7 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
             "All-Star",
             "Data Expert",
             "Style Cop",
-            "only person who knows how to exit VIM",
+            "one who can exit VIM",
             "Conference Speaker",
             "Blogger",
         };
