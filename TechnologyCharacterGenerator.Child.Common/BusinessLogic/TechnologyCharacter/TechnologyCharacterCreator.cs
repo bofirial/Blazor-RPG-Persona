@@ -70,10 +70,17 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
 
         private static string HashString(string input)
         {
-            var bytes = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(input));
+            var currentValue = input;
 
-            return string.Join(string.Empty,
-                bytes.Select(b => b.ToString("X2")));
+            for (int i = 0; i < 2000; i++)
+            {
+                var bytes = MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(currentValue));
+
+                currentValue = string.Join(string.Empty,
+                    bytes.Select(b => b.ToString("X2")));
+            }
+
+            return currentValue;
         }
     }
 }
