@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TechnologyCharacterGenerator.Avatar\TechnologyCharacterGenerator.Avatar.csproj" />
     <ProjectReference Include="..\TechnologyCharacterGenerator.Child.Common\TechnologyCharacterGenerator.Child.Common.csproj" />
   </ItemGroup>
 

@@ -32,6 +32,7 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
             var technologyCharacter = new TechnologyCharacterViewModel
             {
                 CharacterTraits = new List<string>(),
+                TechnologyCharacterAvatar = new TechnologyCharacterAvatarModel(),
                 UserHash = string.Join(string.Empty, userHashArray)
             };
 

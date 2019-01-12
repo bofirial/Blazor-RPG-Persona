@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using TechnologyCharacterGenerator.Foundation.Models;
 
 //HACK: There appears to be an issue with the IL Generator in Blazor when using Generic Components that causes namespace issues.  Putting this model in the __Blazor namespace is a workaround.
 namespace __Blazor.TechnologyCharacterGenerator.Child.Common.Models
@@ -30,6 +31,8 @@ namespace __Blazor.TechnologyCharacterGenerator.Child.Common.Models
         public ushort Management { get; set; }
 
         public List<string> CharacterTraits { get; set; }
+
+        public TechnologyCharacterAvatarModel TechnologyCharacterAvatar { get; set; }
 
         public string UserHash { get; set; }
     }

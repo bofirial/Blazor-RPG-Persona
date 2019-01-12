@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +9,9 @@ using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
+using Microsoft.JSInterop;
 using Newtonsoft.Json;
+using TechnologyCharacterGenerator.Avatar;
 using TechnologyCharacterGenerator.Child.Common;
 using TechnologyCharacterGenerator.Foundation.Models;
 
@@ -27,6 +31,8 @@ namespace TechnologyCharacterGenerator.Child.Client
                     WasmMediaTypeNames.Application.Wasm,
                 });
             });
+
+            services.AddScoped<ITechnologyCharacterAvatarImageGenerator, TechnologyCharacterAvatarImageGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +61,31 @@ namespace TechnologyCharacterGenerator.Child.Client
                     };
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(application));
+                    return;
+                }
+
+                await next.Invoke();
+            });
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/avatar.png", StringComparison.OrdinalIgnoreCase) && context.Request.Method == "POST")
+                {
+                    TechnologyCharacterAvatarModel model = null;
+                    var technologyCharacterAvatarImageGenerator = context.RequestServices.GetService<ITechnologyCharacterAvatarImageGenerator>();
+
+                    if (context.Request.Body != default(Stream) && context.Request.Body != Stream.Null)
+                    {
+                        var body = await new StreamReader(context.Request.Body).ReadToEndAsync();
+
+                        model = JsonConvert.DeserializeObject<TechnologyCharacterAvatarModel>(body);
+                    }
+
+                    var avatar = technologyCharacterAvatarImageGenerator
+                        .GenerateTechnologyCharacterAvatarImage(model);
+
+                    await context.Response.WriteAsync(JsonConvert.SerializeObject(avatar));
+
                     return;
                 }
 

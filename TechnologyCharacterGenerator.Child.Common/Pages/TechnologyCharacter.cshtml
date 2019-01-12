@@ -1,26 +1,32 @@
 ﻿@using __Blazor.TechnologyCharacterGenerator.Child.Common.Models
 
+@inject HttpClient HttpClient
+
 <div class="technologyCharacter form-row m-3">
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.CharacterName)" />
+    <div class="form-group col-xs-12 col-sm-6 col-lg-4 px-2">
+        <img class="avatar w-100" src="@AvatarImageSource" alt="Avatar" style="image-rendering: pixel"/>
+    </div>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Class)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.CharacterName)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.HitPoints)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Class)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Strength)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.HitPoints)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Agility)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Strength)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Intelligence)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Agility)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Programming)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Intelligence)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Documentation)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Programming)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Testing)" />
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Documentation)"/>
 
-    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Management)" />
-    
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Testing)"/>
+
+    <TechnologyCharacterProperty Model="@Model" Property="@(m => m.Management)"/>
+
     <div class="form-group col-12 px-2">
         <label>Character Traits</label>
         <ul class="list-group">
@@ -34,6 +40,15 @@
 
 @functions
 {
-[Parameter]
-TechnologyCharacterViewModel Model { get; set; }
+    [Parameter]
+    TechnologyCharacterViewModel Model { get; set; }
+
+    string AvatarImageSource { get; set; } = string.Empty;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var avatar = await HttpClient.PostJsonAsync<TechnologyCharacterAvatarImage>("/avatar.png", Model.TechnologyCharacterAvatar);
+
+        AvatarImageSource = avatar.ImageSource;
+    }
 }

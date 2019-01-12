@@ -73,12 +73,11 @@ namespace TechnologyCharacterGenerator.Child.Common.BusinessLogic.TechnologyChar
 
             //10-15 Available
 
-            //16 - Skin Color
-            //17 - Hair Color
-            //18 - Color 1 Contrast
-            //19-24 Color 1 Hue
-            //25 - Color 2 Contrast
-            //16-31 Color 2 Hue
+            services.AddScoped<ITechnologyCharacterPropertyGenerator, SkinColorTechnologyCharacterPropertyGenerator>();
+            services.AddScoped<ITechnologyCharacterPropertyGenerator, HairColorTechnologyCharacterPropertyGenerator>();
+
+            services.AddScoped<ITechnologyCharacterPropertyGenerator, MainColorTechnologyCharacterPropertyGenerator>();
+            services.AddScoped<ITechnologyCharacterPropertyGenerator, AccentColorTechnologyCharacterPropertyGenerator>();
 
             ushort i = 32;
             foreach (var trait in Traits)
