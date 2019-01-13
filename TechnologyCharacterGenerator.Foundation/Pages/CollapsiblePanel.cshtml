@@ -27,7 +27,7 @@
 
     [Parameter]
     private RenderFragment ChildContent { get; set; }
-    
+
     [Parameter]
     private bool IsCollapsed { get; set; } = false;
 
@@ -48,5 +48,12 @@
         await JSRuntime.Current.InvokeAsync<object>(
             "foundation.collapsiblePanel.init",
             new DotNetObjectRef(this), Id, IsCollapsed);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await JSRuntime.Current.InvokeAsync<object>(
+            "foundation.collapsiblePanel.update",
+             Id, IsCollapsed);
     }
 }
